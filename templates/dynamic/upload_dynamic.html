@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传动态</title>
+</head>
+<body>
+<form method="post" enctype="multipart/form-data" action="/upload_dynamic_handle/">
+    {% csrf_token %}
+    标题：<input type="text " name="title"><br/>
+    正文：<input type="text " name="text"><br/>
+    照片 <input type="file" name="pic"> <br/>
+    <input type="submit" value="上传">
+</form>
+</body>
+</html>

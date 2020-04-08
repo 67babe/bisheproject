@@ -1,0 +1,52 @@
+{% extends 'login/base.html' %}
+{% load staticfiles %}
+{% block title %}登录{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="col-md-4 col-md-offset-4">
+          <form class='form-login' action="/login/" method="post">
+              {% if message %}
+                    <div class="alert alert-warning">{{ message }}</div>
+              {% endif %}
+              {% csrf_token %}{#防止跨站请求伪造#}
+
+              <h2 class="text-center">欢迎登录</h2>
+{#              {{ login_form }}#}
+{#                虽然简单粗暴，但是很丑#}
+              <div class="form-group">
+                   {{ login_form.username.label_tag }}
+                   {{ login_form.username}}
+{#                <label for="id_username">用户名：</label>#}
+{#                <input type="text" name='username' class="form-control" id="id_username" placeholder="Username" autofocus required>#}
+              </div>
+              <div class="form-group">
+                  {{ login_form.password.label_tag }}
+                  {{ login_form.password }}
+{#                <label for="id_password">密码：</label>#}
+{#                <input type="password" name='password' class="form-control" id="id_password" placeholder="Password" required>#}
+              </div>
+
+{#              <div class="form-group">#}
+{#                  {{ login_form.captcha.errors }}#}
+{#                  {{ login_form.captcha.label_tag }}#}
+{#                  {{ login_form.captcha }}#}
+{#                  #额外增加了一条{{ login_form.captcha.errors }}用于明确指示用户，你的验证码不正确#}
+{#                  其中验证图形码是否正确的工作都是在后台自动完成的，只需要使用is_valid()这个forms内置的验证方法就一起进行了，#}
+{#                  完全不需要在视图函数中添加任何的验证代码，非常方便快捷！#}
+{#              </div>#}
+
+              <button type="reset" class="btn btn-default pull-left">重置</button>
+              <button type="submit" class="btn btn-primary pull-right">提交</button>
+          </form>
+        </div>
+    </div> <!-- /container -->
+{% endblock %}
+{#通过{% extends 'base.html' %}继承了‘base.html’模板的内容；#}
+{#通过{% block title %}登录{% endblock %}设置了专门的title；#}
+{#通过block css引入了针对性的login.css样式文件；#}
+{#主体内容定义在block content内部#}
+{#添加了一个重置按钮。#}

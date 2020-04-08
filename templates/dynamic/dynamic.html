@@ -1,0 +1,54 @@
+{% extends 'login/base.html' %}
+{% block title %}动态{% endblock %}
+
+{% block content %}
+    {% if request.session.is_login %}
+    <h2>你好，{{ request.session.user_name }}   !   欢迎回来！👏 </h2>
+        {#    {% else %}#}
+    <tr>
+        {% for data in data %}
+        <div>标题：{{ data.dyn_title }}</div> <br/>
+            <div>作者：{{ data.user }}</div> <br/>
+        <div>内容：{{ data.dyn_text}}</div> <br/>
+        <div>发表时间：{{ data.dyn_time}}</div><br/>
+
+            <div> <img src="{{ MEDIA_URL }}{{ data.dyn_imag}}" height="120px" width="120px"></div><br/>
+
+            <div>❤️{{ data.dyn_like}}</div><br/>
+    </tr>
+    {% endfor %}
+
+    {% else %}
+    <h1>没有登录用户</h1>
+
+
+    {% endif %}
+
+{#    <a href="/show_upload_dynamic/">发布动态</a> #。。。。这个简单多了#}
+<form method="get" enctype="multipart/form-data" action="/show_upload_dynamic/">
+    {% csrf_token %}
+   <input type="submit" value="发布动态"> <br/>
+</form>
+
+
+{#    <form action="/upload_dynamic_handle/" method="post">#}
+{#    <input type="bottom" value="按钮">#}
+{#    </from>#}
+{##}
+
+
+{% endblock %}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>动态</title>#}
+{#</head>#}
+{#<body>#}
+{#<form method="post" enctype="multipart/form-data">#}
+{#    {% csrf_token %}#}
+{#    <input type="file" name="pic"><br/>#}
+{#    <input type="submit" value="上传">#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
