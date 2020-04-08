@@ -120,7 +120,7 @@ def show_upload_dynamic(request):
     return render(request, 'dynamic/upload_dynamic.html')
 
 def upload_dynamic_handle(request):
-    #1。获取上传的图片的处理对象
+    #1。获取上传的图片的处理对象 测试git
     title = request.POST.get('title')
     pic = request.FILES['pic']
     text = request.POST.get('text')
