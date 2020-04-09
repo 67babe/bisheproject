@@ -1,17 +1,14 @@
 {% block content %}
-<h2>个人信息</h2>
+<h2>添加猫猫</h2>
 <ul>
     <li>昵称: {{ user.name }} </li>
     <li>邮箱地址: {{ user.email }} </li>
 
 </ul>
-<h2>修改密码</h2>
+<h2>添加名下猫猫</h2>
 
 <div class="form-wrapper">
    <form method="post" action="" enctype="multipart/form-data">
-    {% if message %}
-        <div class="alert alert-warning">{{ message }}</div>
-    {% endif %}
       {% csrf_token %}
       {% for field in form %}
            <div class="fieldWrapper">
@@ -23,7 +20,7 @@
            </div>
         {% endfor %}
       <div class="button-wrapper submit">
-         <input type="submit" value="提交" />
+         <input type="submit" value="Update" />
       </div>
    </form>
 </div>

@@ -30,10 +30,28 @@ class ProfileForm(forms.Form):
         ('女', '女'),
     )
     username = forms.CharField(label='昵称', max_length=50, required=True,widget=forms.TextInput(attrs={'class': 'form-control'}))
-    profile = forms.CharField(label='个人简介', max_length=1000, empty_value='这个铲屎官很神秘，没有留下仍和介绍...',required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    profile = forms.CharField(label='个人简介', max_length=1000, empty_value='这个铲屎官很神秘，没有留下什么...',required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
     email = forms.EmailField(label="邮箱地址", required=True, widget=forms.EmailInput(attrs={'class': 'form-control'}))
     sex = forms.ChoiceField(label="性别",choices=gender,required=True)
-    # user_imag = forms.ImageField(verbose_name='用户头像', upload_to='user_img/', required=False,null=True, blank=True) 单独做吧
+    imag = forms.ImageField(label='头像',required=False)
+
+class PwdForm(forms.Form):
+    old_password = forms.CharField(label="请输入旧密码", max_length=256, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    new_password = forms.CharField(label="请输入新密码", max_length=256, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    new_password2 = forms.CharField(label="确认密码", max_length=256, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+
+class PetForm(forms.Form):
+    gender = (
+        ('男孩', '男孩'),
+        ('女孩', '女孩'),
+    )
+    pet_name= forms.CharField(label="猫猫名称", max_length=256, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    pet_age = forms.IntegerField(label="猫猫年龄", widget=forms.TextInput(attrs={'class': 'form-control'}))
+    pet_sex = forms.ChoiceField(label="猫猫性别",choices=gender,required=True)
+    pet_img = forms.ImageField(label='猫猫照片',required=False)
+
+
 
 
 
