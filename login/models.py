@@ -6,12 +6,17 @@ from django.db import models
 from django.db import models
 
 class User(models.Model):
+    gender = (
+        ('男', '男'),
+        ('女', '女'),
+    )
     # user_id=models.AutoField(primary_key=True)
     name = models.CharField(max_length=128, unique=True)
     password = models.CharField(max_length=256)
     email = models.EmailField(unique=True)
     user_imag=models.ImageField(verbose_name='用户头像', upload_to='user_img/', null=True, blank=True)
-
+    profile=models.CharField(max_length=1000,null=True, blank=True)
+    sex= models.CharField(max_length=32,choices=gender,default='男')
     # c_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -38,14 +43,14 @@ class Dynamic(models.Model):
 class Pet(models.Model):
 
     gender = (
-        ('male','公'),
-        ('female','母'),
+        ('男孩','男孩'),
+        ('女孩','女孩'),
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     pet_id = models.AutoField(primary_key=True)
     pet_name = models.CharField(max_length=30)
     pet_age = models.IntegerField(blank=False, null=False,default=0)
-    pet_sex = models.CharField(max_length=32,choices=gender,default='公')
+    pet_sex = models.CharField(max_length=32,choices=gender,default='男孩')
     pet_imag = models.ImageField(verbose_name='宠物图片', upload_to='pet_img/', null=True, blank=True)
 
     def __str__(self):

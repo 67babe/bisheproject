@@ -1,16 +1,24 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
 
 # login/views.py
 
-from django.shortcuts import render, redirect, HttpResponse
+# 顺序：设计数据库模型-数据库迁移-admin中注册模型-设计路由-构建初步视图函数-创建html-前端页面设计-补充视图函数
+from django.shortcuts import render, redirect, HttpResponse,get_object_or_404
 from django.conf import settings
 from .models import User
 from .models import Dynamic
+from .models import Pet
+from .models import Discuss
+from .models import Question
+from .models import Discuss
 from .forms import UserForm
+from .forms import ProfileForm
 from .forms import RegisterForm
 from .models import PicTest
+from django.urls import reverse
 
 import hashlib
 
@@ -112,7 +120,7 @@ def hash_code(s, salt='67babe'):  # 加点盐嘻嘻
 
 
 def dynamic(request):
-    data=Dynamic.objects.all()
+    data=Dynamic.objects.all() #.order_by('-pub_date')
     return render(request, 'dynamic/dynamic.html',context={'data':data})
 
 
@@ -120,7 +128,7 @@ def show_upload_dynamic(request):
     return render(request, 'dynamic/upload_dynamic.html')
 
 def upload_dynamic_handle(request):
-    #1。获取上传的图片的处理对象 测试git
+    #1。获取上传的图片的处理对象
     title = request.POST.get('title')
     pic = request.FILES['pic']
     text = request.POST.get('text')
@@ -135,7 +143,56 @@ def upload_dynamic_handle(request):
     Dynamic.objects.create(dyn_imag ='dynamic_img/%s' % pic.name, dyn_text=text, dyn_title=title,user_id=user)
     # return render(request, 'dynamic/upload_pic.html')
 
-    return HttpResponse('发布成功')
+    return HttpResponseRedirect('/dynamic/')
+
+def home(request):
+    # user = User.objects.get(name=username)  # 直接从数据库里搜
+    userid = request.session.get('user_id')
+    data = User.objects.get(id=userid)
+    pets= Pet.objects.filter(user_id=userid)
+    return render(request,'home/home.html',context={'data':data,'pets':pets})
+
+
+def user_setting(request):
+    userid = request.session.get('user_id')
+    user = User.objects.get(id=userid)
+
+    if request.method == "POST":
+        form = ProfileForm(request.POST)
+
+        if form.is_valid():
+            user.name=form.cleaned_data['username']
+            user.email=form.cleaned_data['email']
+            user.sex=form.cleaned_data['sex']
+            user.profile=form.cleaned_data['profile']
+        user.save()
+        return HttpResponseRedirect('/home/')
+
+    else:
+        default_data = {'username':user.name,'email':user.email,'sex':user.sex,'profile':user.profile}
+        form = ProfileForm(default_data)
+        return render(request, 'home/user_setting.html', {'form': form, 'user': user})
+        # return HttpResponseRedirect(reverse('users:profile', args=[user.id]))
+    # 在这个HttpResponseRedirect示例中，我们在的构造函数中使用reverse()
+    # 函数。这个函数避免了我们在视图函数中的硬编码URL。它需要我们替换我们想要替换的视图的名字和该视图所对应的URL模式中需要给该视图提供的参数。在本例中，使用在教程第3部分中设置的URLconf，reverse()
+    # 调用将返回一个这样的字符串：
+    #
+    # '/polls/3/results/'
+    # 其中3是question.id的值。重定向的URL将调用
+    # 'results'
+    # 视图来显示最终的页面。
+
+
+
+    user = User.objects.get(name=username)  # 直接从数据库里搜
+    userid = get_object_or_404(User, pk=pk)
+    data = User.objects.get(id=userid)
+    pets= Pet.objects.filter(user_id=userid)
+    return render(request,'home/home.html',context={'data':data,'pets':pets})
+
+
+
+
 
 
 

@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+{% extends 'login/base.html' %}
+{% block title %}动态{% endblock %}
+{% block content %}
+    {% if request.session.is_login %}
+    <h2>你好，{{ request.session.user_name }}   !   欢迎回来！👏 </h2>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,4 +17,8 @@
     <input type="submit" value="上传">
 </form>
 </body>
+    {% else %}
+    <h1>没有登录用户</h1>
+    {% endif %}
+{% endblock %}
 </html>

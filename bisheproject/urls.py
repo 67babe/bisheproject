@@ -32,7 +32,8 @@ urlpatterns = [
     url(r'^upload_handle/', views.upload_handle),#上传图片处理
     url(r'^show_upload_dynamic', views.show_upload_dynamic),#上传图片处理
     url(r'^upload_dynamic_handle', views.upload_dynamic_handle),#上传图片处理
-
+    url(r'^home/', views.home),#个人主页
+    url(r'^user_setting/', views.user_setting),#个人主页
 
 
 

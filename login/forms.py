@@ -24,6 +24,19 @@ class RegisterForm(forms.Form):
     # captcha = CaptchaField(label='验证码')
 
 
+class ProfileForm(forms.Form):
+    gender = (
+        ('男', '男'),
+        ('女', '女'),
+    )
+    username = forms.CharField(label='昵称', max_length=50, required=True,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    profile = forms.CharField(label='个人简介', max_length=1000, empty_value='这个铲屎官很神秘，没有留下仍和介绍...',required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(label="邮箱地址", required=True, widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    sex = forms.ChoiceField(label="性别",choices=gender,required=True)
+    # user_imag = forms.ImageField(verbose_name='用户头像', upload_to='user_img/', required=False,null=True, blank=True) 单独做吧
+
+
+
 # class DynamicForm(forms.Form):
 #     title = forms.CharField(label="标题", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control'}))
 #     text = forms.CharField(label="内容", max_length=1000, widget=forms.TextInput(attrs={'class': 'form-control'}))

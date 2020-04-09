@@ -6,7 +6,7 @@
     <h2>你好，{{ request.session.user_name }}   !   欢迎回来！👏 </h2>
         {#    {% else %}#}
     <tr>
-        {% for data in data %}
+        {% for data in data reversed %}
         <div>标题：{{ data.dyn_title }}</div> <br/>
             <div>作者：{{ data.user }}</div> <br/>
         <div>内容：{{ data.dyn_text}}</div> <br/>
@@ -17,6 +17,10 @@
             <div>❤️{{ data.dyn_like}}</div><br/>
     </tr>
     {% endfor %}
+<form method="get" enctype="multipart/form-data" action="/show_upload_dynamic/">
+    {% csrf_token %}
+   <input type="submit" value="发布动态"> <br/>
+</form>
 
     {% else %}
     <h1>没有登录用户</h1>
@@ -25,10 +29,6 @@
     {% endif %}
 
 {#    <a href="/show_upload_dynamic/">发布动态</a> #。。。。这个简单多了#}
-<form method="get" enctype="multipart/form-data" action="/show_upload_dynamic/">
-    {% csrf_token %}
-   <input type="submit" value="发布动态"> <br/>
-</form>
 
 
 {#    <form action="/upload_dynamic_handle/" method="post">#}

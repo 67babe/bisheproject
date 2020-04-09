@@ -1,0 +1,53 @@
+{% extends 'login/base.html' %}
+{% block title %}个人主页{% endblock %}
+{% block content %}
+    {% if request.session.is_login %}
+    <h2>你好，{{ request.session.user_name }}   !   欢迎回来！👏 </h2>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人主页</title>
+</head>
+<body>
+
+<tr>
+    <div> 头像<img src="{{ MEDIA_URL }}{{ data.user_imag}}" height="120px" width="120px"></div><br/>
+        <div>昵称：{{ data.name }}  性别：{{ data.sex }}</div> <br/>
+            <div>邮箱：{{ data.email }}</div> <br/>
+            <div>个人简介：{{ data.profile }}</div> <br/>
+
+    <div>名下猫猫：</div> <br/>
+        <table border="1">
+            {% for pets in pets%}
+             <th>
+                <div>{{ pets.pet_name }} {{ pets.pet_sex }} {{ pets.pet_age }}岁 </div> <br/>
+
+                 <div> <img src="{{ MEDIA_URL }}{{ pets.pet_imag}}" height="120px" width="120px"></div>
+             </th>
+
+            {% endfor %}
+{#        <div>名下猫猫：</div> <br/>#}
+{#                     {% for pets in pets%}#}
+{#                   <div>{{ pets.pet_name }} {{ pets.pet_sex }} {{ pets.pet_age }}岁 </div> <br/>#}
+{##}
+{#            <div> <img src="{{ MEDIA_URL }}{{ pets.pet_imag}}" height="120px" width="120px"></div>#}
+{##}
+{#                     {% endfor %}#}
+</table>
+
+            <div>总点赞数❤️ pass </div><br/>
+            <div>粉丝 pass </div><br/>
+            <div>关注 pass </div><br/>
+
+    </tr>
+</body>
+        <a href="/user_setting">编辑资料</a>
+
+
+
+    {% else %}
+    <h1>没有登录用户</h1>
+    {% endif %}
+{% endblock %}
+</html>
+</html>
