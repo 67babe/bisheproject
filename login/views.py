@@ -93,7 +93,7 @@ def register(request):
                 # 利用ORM的API，创建一个用户实例，然后保存到数据库内
                 new_user = User.objects.create()
                 new_user.name = username
-                new_user.password = hash_code(password1)  # 使用加密密码
+                new_user.password = password1  # 使用加密密码
                 new_user.email = email
                 new_user.save()
                 return redirect('/login/')  # 自动跳转到登录页面
@@ -159,7 +159,9 @@ def home(request):
     userid = request.session.get('user_id')
     data = User.objects.get(id=userid)
     pets = Pet.objects.filter(user_id=userid)
-    return render(request, 'home/home.html', context={'data': data, 'pets': pets})
+    dynamic=Dynamic.objects.filter(user_id=userid)
+    dynamic2=dynamic.order_by('dynamic_id')[:5]
+    return render(request, 'home/home.html', context={'data': data, 'pets': pets, 'dynamic': dynamic2})
 
 
 def pet(request):
@@ -205,12 +207,12 @@ def user_setting(request):
         return HttpResponseRedirect('/home/')
 
     else:
-        default_data = {'username': user.name, 'email': user.email, 'sex': user.sex, 'profile': user.profile}
+        default_data = {'username': user.name, 'email': user.email, 'sex': user.sex, 'profile': user.profile,'imag':user.user_imag}
         form = ProfileForm(default_data)
         return render(request, 'home/user_setting.html', {'form': form, 'user': user})
 
-    user = User.objects.get(name=username)  # 直接从数据库里搜
-    userid = get_object_or_404(User, pk=pk)
+    # user = User.objects.get(name=username)  # 直接从数据库里搜
+    # userid = get_object_or_404(User, pk=pk)
     data = User.objects.get(id=userid)
     pets = Pet.objects.filter(user_id=userid)
     return render(request, 'home/home.html', context={'data': data, 'pets': pets})

@@ -38,7 +38,7 @@
         <div class="collapse navbar-collapse" id="my-nav">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/index/">主页</a></li>
-              <li class="active"><a href="/dynamic/">动态</a></li>
+              <li class="active"><a href="/dynamic/">所有动态</a></li>
               <li class="active"><a href="/pet/">我的猫猫</a></li>
               <li class="active"><a href="/home/">个人主页</a></li>
 
@@ -47,7 +47,9 @@
 {#            <li><a href="/login">登录</a></li>#}
 {#            <li><a href="/register/">注册</a></li>#}
               {% if request.session.is_login %}
-                  <li><a href="#">当前在线：{{ request.session.user_name }}</a></li>
+                  <li><a href="#">当前在线：{{ request.session.user_name }}
+                      <img src="{{ MEDIA_URL }}{{ data.user_imag}}" height="20px" width="20px" style="border-radius: 250px"> </a>
+                  </li>
                   <li><a href="/logout/">登出</a></li>
               {% else %}
                   <li><a href="/login/">登录</a></li>

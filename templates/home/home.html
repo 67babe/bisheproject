@@ -11,12 +11,18 @@
 <body>
 
 <tr>
-    <div> 头像<img src="{{ MEDIA_URL }}{{ data.user_imag}}" height="120px" width="120px"></div><br/>
+
+<div style="width: 120px;height: 120px; border-radius:250px;overflow: hidden;">
+    <img src="{{ MEDIA_URL }}{{ data.user_imag}}" height="120px" width="120px">
+</div>
         <div>昵称：{{ data.name }}  性别：{{ data.sex }}</div> <br/>
             <div>邮箱：{{ data.email }}</div> <br/>
             <div>个人简介：{{ data.profile }}</div> <br/>
+            <div>总点赞数❤️ pass </div><br/>
+                        <div>粉丝 pass </div><br/>
+                        <div>关注 pass </div><br/>
 
-    <div>名下猫猫：</div> <br/>
+    <div>我的猫猫：</div> <br/>
         <table border="1">
             {% for pets in pets%}
              <th>
@@ -29,18 +35,24 @@
 
             {% endfor %}
          <th> <a href="/add_pet">添加名下猫猫</a></th>
-{#        <div>名下猫猫：</div> <br/>#}
-{#                     {% for pets in pets%}#}
-{#                   <div>{{ pets.pet_name }} {{ pets.pet_sex }} {{ pets.pet_age }}岁 </div> <br/>#}
-{##}
-{#            <div> <img src="{{ MEDIA_URL }}{{ pets.pet_imag}}" height="120px" width="120px"></div>#}
-{##}
-{#                     {% endfor %}#}
-</table>
+        </table><br/><br/>
 
-            <div>总点赞数❤️ pass </div><br/>
-            <div>粉丝 pass </div><br/>
-            <div>关注 pass </div><br/>
+    <div>我的动态：</div> <br/>
+        <table border="1">
+            {% for dynamic in dynamic%}
+             <th>
+                <div>{{ dynamic.dyn_title }}  </div>
+                 <div>{{ dynamic.dyn_text  }}  </div>
+                 <div>{{ dynamic.dyn_time  }}  </div>
+                 <div> <img src="{{ MEDIA_URL }}{{ dynamic.dyn_imag }}" height="120px" width="120px"></div>
+
+             </th>
+
+
+            {% endfor %}
+         <th> <a href="/dynamic">查看更多</a></th>
+        </table>
+
 
     </tr>
 </body>
