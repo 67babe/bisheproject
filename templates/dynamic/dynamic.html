@@ -9,9 +9,13 @@
                 <input type="submit" value="发布动态" style="font-size: 30px">
             </form>
         </div>
-        <div style="font-size: 28px;margin-left: 10px;margin-bottom: 20px">你好，{{ request.session.user_name }} !
-            欢迎回来！👏
+        <div style="display: flex; justify-content: space-between">
+            <div style="font-size: 28px;margin-left: 10px;margin-bottom: 20px">你好，{{ request.session.user_name }} !
+                欢迎回来！👏
+            </div>
+            <input placeholder="搜索" style="width: 300px;height: 36px;margin-right: 20px"/>
         </div>
+
 
         <div style="display: flex; flex-wrap: wrap;">
             {% for data in data reversed %}
