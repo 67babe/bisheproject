@@ -1,17 +1,13 @@
 {% extends 'login/base.html' %}
-{% block title %}个人主页{% endblock %}
+{% block title %}其他用户主页{% endblock %}
 {% block content %}
     {% if request.session.is_login %}
     <h2>你好，{{ request.session.user_name }}   !   欢迎回来！👏 </h2>
 <html lang="en">
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <title>个人主页</title>#}
-{#</head>#}
 <body>
 
 <tr>
-
+<h1>这是用户{{ data.name }}的个人界面</h1>
 <div style="width: 120px;height: 120px; border-radius:250px;overflow: hidden;">
     <img src="{{ MEDIA_URL }}{{ data.user_imag}}" height="120px" width="120px">
 </div>
@@ -22,7 +18,7 @@
                         <div>粉丝 pass </div><br/>
                         <div>关注 pass </div><br/>
 
-    <div>我的猫猫：</div> <br/>
+    <div>他的猫猫：</div> <br/>
         <table border="1">
             {% for pets in pets%}
              <th>
@@ -34,30 +30,25 @@
 
 
             {% endfor %}
-         <th> <a href="/add_pet">添加名下猫猫</a></th>
         </table><br/><br/>
 
-    <div>我的动态：</div> <br/>
+    <div>他的动态：</div> <br/>
         <table border="1">
             {% for dynamic in dynamic%}
              <th>
                 <div>{{ dynamic.dyn_title }}  </div>
                  <div>{{ dynamic.dyn_text  }}  </div>
                  <div>{{ dynamic.dyn_time  }}  </div>
-                 <div> <img src="{{ MEDIA_URL }}{{ dynamic.dyn_imag }}" height="120px" width="120px"></div>
+                 <div> <img src="{{ MEDIA_URL }}{{ dynamic.dyn_imag }}" height="120px" width="120px" ></div>
 
              </th>
-
-
             {% endfor %}
-         <th> <a href="/dynamic">查看更多</a></th>
+
         </table>
 
 
     </tr>
 </body>
-        <a href="/user_setting">编辑资料</a>
-        <a href="/pwd_change">修改密码</a>
 
 
     {% else %}

@@ -22,10 +22,59 @@ class User(models.Model):
     def __str__(self):
         return self.name
 
-    # class Meta:#元数据里定义用户按创建时间的反序排列，也就是最近的最先显示；
-    #     ordering = ['c_time']
-    #     verbose_name = '用户'
-    #     verbose_name_plural = '用户'
+    def get_following(self):
+        '''
+        following  关注的人
+        :return:
+        '''
+        user_list = []
+        for follower_user in self.follower.all():
+            user_list.append(follower_user.following)
+        return user_list
+
+    def get_follower(self):
+        '''
+        follower 关注我的人
+        :return:
+        '''
+        user_list = []
+        for following_user in self.following.all():
+            user_list.append(following_user.follower)
+        return user_list
+
+    def set_following(self,id):
+        '''
+        follow some user use id
+        :param id:
+        :return:
+        '''
+        try:
+            user = User.objects.get(id=id)
+        except Exception:
+            return None
+        # 这是关注的逻辑
+        friendship = FriendShip()
+        friendship.follower = self
+        friendship.following = user
+        friendship.save()
+        return True
+
+    def delete_following(self,id):
+        try:
+            user = User.objects.get(id=id)
+        except Exception:
+            return None
+            # 这是关注的逻辑
+        friendship = FriendShip.objects.filter(follower=self,following=user)
+        if friendship:
+            friendship.delete()#取消关注
+
+
+
+
+class FriendShip(models.Model):
+    following = models.ForeignKey(User,related_name='following',on_delete=models.CASCADE)#关注
+    follower = models.ForeignKey(User,related_name='follower',on_delete=models.CASCADE)#粉丝
 
 class Dynamic(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)

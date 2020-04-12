@@ -34,9 +34,9 @@
                   {{ login_form.captcha.errors }}
                   {{ login_form.captcha.label_tag }}
                   {{ login_form.captcha }}
-                  #额外增加了一条{{ login_form.captcha.errors }}用于明确指示用户，你的验证码不正确
-                  其中验证图形码是否正确的工作都是在后台自动完成的，只需要使用is_valid()这个forms内置的验证方法就一起进行了，
-                  完全不需要在视图函数中添加任何的验证代码，非常方便快捷！
+{#                  #额外增加了一条{{ login_form.captcha.errors }}用于明确指示用户，你的验证码不正确#}
+{#                  其中验证图形码是否正确的工作都是在后台自动完成的，只需要使用is_valid()这个forms内置的验证方法就一起进行了，#}
+{#                  完全不需要在视图函数中添加任何的验证代码，非常方便快捷！#}
               </div>
 
               <button type="reset" class="btn btn-default pull-left">重置</button>

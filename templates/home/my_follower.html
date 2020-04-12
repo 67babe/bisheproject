@@ -1,0 +1,53 @@
+{% extends 'login/base.html' %}
+{% block title %}我的关注{% endblock %}
+{% block content %}
+    {% if request.session.is_login %}
+    <h2>你好，{{ request.session.user_name }}   !   欢迎回来！👏 </h2>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的粉丝</title>
+</head>
+<body>
+
+<tr>
+    <div>我的粉丝：</div> <br/>
+        <table border="1">
+            {% for data in data %}
+             <th>
+                 <form method="get" enctype="multipart/form-data" action="/show_profile/{{ data.id }}/">
+{#                     点击头像查看用户页面#}
+                {% csrf_token %}
+                  <div style="width: 120px;height: 120px; border-radius:250px;overflow: hidden;">
+                    <input type="image" src=" {{ MEDIA_URL }}{{data.user_imag }}" height="120px" width="120px" value="查看用户主页">
+                 </div>
+            </form>
+                <div>{{ data.name}}</div> <br/>
+
+                 <div>{{ data.profile}}</div> <br/>
+{#                <form action="del" method="POST">#}
+{#                    {% csrf_token %}#}
+{##}
+{#                    <input type="submit" value="清库">#}
+
+                </form>
+
+             </th>
+
+
+            {% endfor %}
+
+
+</table>
+
+
+
+    </tr>
+</body>
+
+    {% else %}
+    <h1>没有登录用户</h1>
+    {% endif %}
+{% endblock %}
+</html>
+</html>

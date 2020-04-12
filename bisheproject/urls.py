@@ -33,10 +33,15 @@ urlpatterns = [
     url(r'^upload_handle/', views.upload_handle),#上传图片处理
     url(r'^show_upload_dynamic', views.show_upload_dynamic),#上传图片处理
     url(r'^upload_dynamic_handle', views.upload_dynamic_handle),#上传图片处理
-    url(r'^home/', views.home),#个人主页
+    path('home/<int:userid>/', views.home, name='home'),#个人主页
     url(r'^user_setting/', views.user_setting),#用户资料设置
     url(r'^pwd_change/', views.pwd_change),#修改密码
     url(r'^pet/', views.pet),#宠物页面
     url(r'^add_pet/', views.add_pet),#添加宠物
+    url(r'^my_following/', views.my_following),#我的关注
+    url(r'^my_follower/', views.my_follower),#我的粉丝
+    url(r'^delete_following/', views.delete_following),#我的关注
+    url(r'^set_following/', views.set_following),#我的粉丝
+    path('show_profile/<int:userid>/', views.show_profile,name='show_profile'),#我的粉丝
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)#指定和映射静态文件的路径

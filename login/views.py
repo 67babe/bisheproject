@@ -14,6 +14,7 @@ from .models import Pet
 from .models import Discuss
 from .models import Question
 from .models import Discuss
+from .models import FriendShip
 from .forms import UserForm
 from .forms import ProfileForm
 from .forms import RegisterForm
@@ -119,6 +120,35 @@ def logout(request):
     return redirect("/index/")
 
 
+def my_following(request):#我的关注
+    userid = request.session.get('user_id')
+    user = User.objects.get(id=userid)
+    data=user.get_following()
+    return render(request, 'home/my_following.html', context={'data': data})
+
+
+def my_follower(request):#我的粉丝
+    userid = request.session.get('user_id')
+    user = User.objects.get(id=userid)
+    data=user.get_follower()
+    return render(request, 'home/my_follower.html', context={'data': data})
+
+
+def set_following(request):  # 添加关注
+    userid = request.session.get('user_id')
+    user = User.objects.get(id=userid)
+    user.set_following()
+    return  HttpResponse('关注成功')
+
+
+def delete_following(request):#取消关注
+    userid = request.session.get('user_id')
+    user = User.objects.get(id=userid)
+    user.delete_following()
+    return  HttpResponse('取消关注成功')
+
+
+
 def hash_code(s, salt='67babe'):  # 加点盐嘻嘻
     h = hashlib.sha256()
     s += salt
@@ -127,6 +157,9 @@ def hash_code(s, salt='67babe'):  # 加点盐嘻嘻
 
 
 def dynamic(request):
+    if not request.session.get('is_login', None):
+        # 如果本来就未登录，也就没有登出一说
+        return redirect("/index/")
     data = Dynamic.objects.all()  # .order_by('-pub_date')
     return render(request, 'dynamic/dynamic.html', context={'data': data})
 
@@ -154,17 +187,35 @@ def upload_dynamic_handle(request):
     return HttpResponseRedirect('/dynamic/')
 
 
-def home(request):
+
+def home(request,userid):
+    if not request.session.get('is_login', None):
+        # 如果本来就未登录，也就没有登出一说
+        return redirect("/index/")
     # user = User.objects.get(name=username)  # 直接从数据库里搜
-    userid = request.session.get('user_id')
+    # userid =
+    userid=userid
     data = User.objects.get(id=userid)
     pets = Pet.objects.filter(user_id=userid)
     dynamic=Dynamic.objects.filter(user_id=userid)
     dynamic2=dynamic.order_by('dynamic_id')[:5]
-    return render(request, 'home/home.html', context={'data': data, 'pets': pets, 'dynamic': dynamic2})
+    return render(request, 'home/home.html', context={'data': data, 'pets': pets, 'dynamic': dynamic2,'userid':userid})
 
+def show_profile(request,userid):
+    if not request.session.get('is_login', None):
+        # 如果本来就未登录，也就没有登出一说
+        return redirect("/index/")
+    userid=userid
+    data=data = User.objects.get(id=userid)
+    pets = Pet.objects.filter(user_id=userid)
+    dynamic=Dynamic.objects.filter(user_id=userid)
+    dynamic2=dynamic.order_by('dynamic_id')[:5]
+    return render(request, 'home/show_profile.html', context={'data': data, 'pets': pets, 'dynamic': dynamic2,'userid':userid})
 
 def pet(request):
+    if not request.session.get('is_login', None):
+        # 如果本来就未登录，也就没有登出一说
+        return redirect("/index/")
     userid = request.session.get('user_id')
     pets = Pet.objects.filter(user_id=userid)
     return render(request, 'Pet/pet.html', context={'pets': pets})
@@ -217,29 +268,6 @@ def user_setting(request):
     pets = Pet.objects.filter(user_id=userid)
     return render(request, 'home/home.html', context={'data': data, 'pets': pets})
 
-
-# def pwd_change(request):
-#     userid = request.session.get('user_id')
-#     user = User.objects.get(id=userid)
-#     if request.method == "POST":
-#         form = PwdForm(request.POST)
-#         message = "请检查填写的内容！"
-#
-#         if form.is_valid():
-#             old_password=form.cleaned_data['old_password']
-#             new_password=form.cleaned_data['new_password']
-#             new_password2=form.cleaned_data['new_password2']
-#
-#             if user.password != hash_code(old_password):  # 哈希值和数据库内的值进行比对
-#                 message = "密码错误！"
-#                 return HttpResponseRedirect('/pwd_change/')
-#             if new_password != new_password2:  # 判断两次密码是否相同
-#                 message = "两次输入的密码不同！"
-#                 return HttpResponseRedirect('/pwd_change/')
-#             else:
-#                 user.password=new_password
-#                 user.save()
-#     return HttpResponseRedirect('/pwd_change/')
 
 def pwd_change(request):
     userid = request.session.get('user_id')
