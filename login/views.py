@@ -235,7 +235,7 @@ def show_profile(request,userid):
             return redirect('show_profile', userid)
         else:
             return render(request, 'home/show_profile.html', locals())
-    return render(request, 'home/show_profile.html', locals())
+    return render(request, 'home/show_profile.html', locals())#
 
 
 
