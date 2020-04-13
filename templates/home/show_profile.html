@@ -5,12 +5,18 @@
     <h2>你好，{{ request.session.user_name }}   !   欢迎回来！👏 </h2>
 <html lang="en">
 <body>
-
+{#{% if user.is_authenticated %}#}
 <tr>
 <h1>这是用户{{ data.name }}的个人界面</h1>
 <div style="width: 120px;height: 120px; border-radius:250px;overflow: hidden;">
     <img src="{{ MEDIA_URL }}{{ data.user_imag}}" height="120px" width="120px">
 </div>
+{% if user != user_info %}
+    <form method="post" action="{% url 'show_profile' user_info.id %}">
+        {% csrf_token %}
+        <input type="submit" value="{{ show_button }}" >
+    </form>
+    {% endif %}
         <div>昵称：{{ data.name }}  性别：{{ data.sex }}</div> <br/>
             <div>邮箱：{{ data.email }}</div> <br/>
             <div>个人简介：{{ data.profile }}</div> <br/>

@@ -21,7 +21,7 @@ from .forms import RegisterForm
 from .forms import PwdForm
 from .forms import PetForm
 from .models import PicTest
-
+from django.db.models import Q
 from django.urls import reverse
 
 import hashlib
@@ -50,10 +50,11 @@ def login(request):
                     request.session['user_id'] = user.id
                     request.session['user_name'] = user.name
                     return redirect('/index/')
+
                 else:
                     message = "密码不正确！"
             except:
-                message = "用户不存在！？"
+                message = "用户不存在！"
         return render(request, 'login/login.html', locals())
     # Python内置了一个locals()函数，它返回当前所有的本地变量字典
     login_form = UserForm()
@@ -192,6 +193,7 @@ def home(request,userid):
     if not request.session.get('is_login', None):
         # 如果本来就未登录，也就没有登出一说
         return redirect("/index/")
+
     # user = User.objects.get(name=username)  # 直接从数据库里搜
     # userid =
     userid=userid
@@ -206,11 +208,38 @@ def show_profile(request,userid):
         # 如果本来就未登录，也就没有登出一说
         return redirect("/index/")
     userid=userid
-    data=data = User.objects.get(id=userid)
+    user_info = User.objects.get(id=userid)         # URL中指向的是哪个用户的profile页面
+    userid2 = request.session.get('user_id')# 登录用户自己的用户信息，用于Follow
+    self_user=User.objects.get(id=userid2)
+    to_follow_user = User.objects.get(id=userid)    # 通过URL获取的对象信息，用于Follow
+    data = User.objects.get(id=userid)
     pets = Pet.objects.filter(user_id=userid)
-    dynamic=Dynamic.objects.filter(user_id=userid)
-    dynamic2=dynamic.order_by('dynamic_id')[:5]
-    return render(request, 'home/show_profile.html', context={'data': data, 'pets': pets, 'dynamic': dynamic2,'userid':userid})
+    dynamic = Dynamic.objects.filter(user_id=userid)
+    dynamic2 = dynamic.order_by('dynamic_id')[:5]
+
+    if not FriendShip.objects.filter(follower=self_user, following=to_follow_user): # 如果登录用户和对象用户没有关注
+        show_button = "关注"
+        if request.method == "POST":
+            relationship = FriendShip()
+            relationship.following = User.objects.get(id=to_follow_user.id)  # 要去关注谁
+            relationship.follower = User.objects.get(id=self_user.id)  # 由谁来关注
+            relationship.save()
+            return redirect('show_profile', userid)
+        else:
+            return render(request, 'home/show_profile.html', locals())
+    else:
+        show_button = "取消关注"
+        if request.method == "POST":
+            relationship = FriendShip.objects.get(follower=self_user, following=to_follow_user)
+            relationship.delete()
+            return redirect('show_profile', userid)
+        else:
+            return render(request, 'home/show_profile.html', locals())
+    return render(request, 'home/show_profile.html', locals())
+
+
+
+
 
 def pet(request):
     if not request.session.get('is_login', None):

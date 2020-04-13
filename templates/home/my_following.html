@@ -16,7 +16,8 @@
             {% for data in data %}
              <th>
 
-             <form method="get" enctype="multipart/form-data" action="/show_profile/{{ data.id }}/"> #点击头像查看用户页面
+             <form method="get" enctype="multipart/form-data" action="/show_profile/{{ data.id }}/">
+{#                 点击头像查看用户页面#}
                 {% csrf_token %}
                   <div style="width: 120px;height: 120px; border-radius:250px;overflow: hidden;">
                     <input type="image" src=" {{ MEDIA_URL }}{{data.user_imag }}" height="120px" width="120px" value="查看用户主页">

@@ -42,6 +42,6 @@ urlpatterns = [
     url(r'^my_follower/', views.my_follower),#我的粉丝
     url(r'^delete_following/', views.delete_following),#我的关注
     url(r'^set_following/', views.set_following),#我的粉丝
-    path('show_profile/<int:userid>/', views.show_profile,name='show_profile'),#我的粉丝
+    path('show_profile/<int:userid>/', views.show_profile,name='show_profile'),#显示用户个人页面
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)#指定和映射静态文件的路径

@@ -65,7 +65,7 @@ class User(models.Model):
         except Exception:
             return None
             # 这是关注的逻辑
-        friendship = FriendShip.objects.filter(follower=self,following=user)
+        friendship = FriendShip.objects.filter(follower=self,following=user).all()
         if friendship:
             friendship.delete()#取消关注
 
