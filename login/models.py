@@ -108,6 +108,7 @@ class Pet(models.Model):
 
 class Discuss(models.Model):
     dynamic = models.ForeignKey(Dynamic, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     discuss_id = models.AutoField(primary_key=True)
     dis_text= models.CharField(max_length=1000,default=' ')
     dis_like = models.IntegerField(blank=False, null=False,default=0)

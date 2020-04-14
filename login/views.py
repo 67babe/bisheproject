@@ -29,7 +29,7 @@ import hashlib
 
 def index(request):
     pass
-    return render(request, 'login/index.html')
+    return render(request, 'login/index.html',locals())
 
 
 def login(request):
@@ -124,15 +124,17 @@ def logout(request):
 def my_following(request):#我的关注
     userid = request.session.get('user_id')
     user = User.objects.get(id=userid)
+    user_head=User.objects.get(id=userid)#专门做头像用
     data=user.get_following()
-    return render(request, 'home/my_following.html', context={'data': data})
+    return render(request, 'home/my_following.html', locals())
 
 
 def my_follower(request):#我的粉丝
     userid = request.session.get('user_id')
     user = User.objects.get(id=userid)
+    user_head = User.objects.get(id=userid)  # 专门做头像用
     data=user.get_follower()
-    return render(request, 'home/my_follower.html', context={'data': data})
+    return render(request, 'home/my_follower.html', locals())
 
 
 def set_following(request):  # 添加关注
@@ -161,8 +163,11 @@ def dynamic(request):
     if not request.session.get('is_login', None):
         # 如果本来就未登录，也就没有登出一说
         return redirect("/index/")
-    data = Dynamic.objects.all()  # .order_by('-pub_date')
-    return render(request, 'dynamic/dynamic.html', context={'data': data})
+    userid = request.session.get('user_id')
+    user = User.objects.get(id=userid)
+    user_head = User.objects.get(id=userid)  # 专门做头像用
+    data = Dynamic.objects.all() # .order_by('-pub_date')
+    return render(request, 'dynamic/dynamic.html',locals())
 
 
 def show_upload_dynamic(request):
@@ -198,15 +203,18 @@ def home(request,userid):
     # userid =
     userid=userid
     data = User.objects.get(id=userid)
+    user_head = User.objects.get(id=userid)  # 专门做头像用
     pets = Pet.objects.filter(user_id=userid)
     dynamic=Dynamic.objects.filter(user_id=userid)
     dynamic2=dynamic.order_by('dynamic_id')[:5]
-    return render(request, 'home/home.html', context={'data': data, 'pets': pets, 'dynamic': dynamic2,'userid':userid})
+    return render(request, 'home/home.html', locals())
 
 def show_profile(request,userid):
     if not request.session.get('is_login', None):
         # 如果本来就未登录，也就没有登出一说
         return redirect("/index/")
+    userid1 = request.session.get('user_id')# 专门做头像用
+    user_head = User.objects.get(id=userid1)  # 专门做头像用
     userid=userid
     user_info = User.objects.get(id=userid)         # URL中指向的是哪个用户的profile页面
     userid2 = request.session.get('user_id')# 登录用户自己的用户信息，用于Follow
@@ -235,7 +243,7 @@ def show_profile(request,userid):
             return redirect('show_profile', userid)
         else:
             return render(request, 'home/show_profile.html', locals())
-    return render(request, 'home/show_profile.html', locals())#
+    return render(request, 'home/show_profile.html', locals())
 
 
 
@@ -246,13 +254,15 @@ def pet(request):
         # 如果本来就未登录，也就没有登出一说
         return redirect("/index/")
     userid = request.session.get('user_id')
+    user_head = User.objects.get(id=userid)  # 专门做头像用
     pets = Pet.objects.filter(user_id=userid)
-    return render(request, 'Pet/pet.html', context={'pets': pets})
+    return render(request, 'Pet/pet.html', locals())
 
 
 def add_pet(request):
     userid = request.session.get('user_id')
     user = User.objects.get(id=userid)
+    user_head = User.objects.get(id=userid)  # 专门做头像用
     if request.method == "POST":
         form = PetForm(request.POST, request.FILES)
         if form.is_valid():
@@ -274,7 +284,7 @@ def add_pet(request):
 def user_setting(request):
     userid = request.session.get('user_id')
     user = User.objects.get(id=userid)
-
+    user_head = User.objects.get(id=userid)  # 专门做头像用
     if request.method == "POST":
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -295,12 +305,13 @@ def user_setting(request):
     # userid = get_object_or_404(User, pk=pk)
     data = User.objects.get(id=userid)
     pets = Pet.objects.filter(user_id=userid)
-    return render(request, 'home/home.html', context={'data': data, 'pets': pets})
+    return render(request, 'home/home.html', locals())
 
 
 def pwd_change(request):
     userid = request.session.get('user_id')
     user = User.objects.get(id=userid)
+    user_head = User.objects.get(id=userid)  # 专门做头像用
     if request.method == "POST":
         form = PwdForm(request.POST)
         message = "请检查填写的内容！"
