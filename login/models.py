@@ -17,7 +17,7 @@ class User(models.Model):
     user_imag=models.ImageField(verbose_name='用户头像', upload_to='user_img/', null=True, blank=True)
     profile=models.CharField(max_length=1000,null=True, blank=True)
     sex= models.CharField(max_length=32,choices=gender,default='男')
-    # c_time = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return self.name
@@ -108,7 +108,7 @@ class Pet(models.Model):
 
 class Discuss(models.Model):
     dynamic = models.ForeignKey(Dynamic, on_delete=models.CASCADE)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
     discuss_id = models.AutoField(primary_key=True)
     dis_text= models.CharField(max_length=1000,default=' ')
     dis_like = models.IntegerField(blank=False, null=False,default=0)

@@ -33,6 +33,10 @@ def index(request):
 
 
 def login(request):
+    pass
+    return render(request, 'login.html',locals())
+
+def login(request):
     if request.session.get('is_login', None):
         return redirect('/index')
     # 不允许重复登录
