@@ -42,32 +42,32 @@ class User(models.Model):
             user_list.append(following_user.follower)
         return user_list
 
-    def set_following(self,id):
-        '''
-        follow some user use id
-        :param id:
-        :return:
-        '''
-        try:
-            user = User.objects.get(id=id)
-        except Exception:
-            return None
-        # 这是关注的逻辑
-        friendship = FriendShip()
-        friendship.follower = self
-        friendship.following = user
-        friendship.save()
-        return True
-
-    def delete_following(self,id):
-        try:
-            user = User.objects.get(id=id)
-        except Exception:
-            return None
-            # 这是关注的逻辑
-        friendship = FriendShip.objects.filter(follower=self,following=user).all()
-        if friendship:
-            friendship.delete()#取消关注
+    # def set_following(self,id):
+    #     '''
+    #     follow some user use id
+    #     :param id:
+    #     :return:
+    #     '''
+    #     try:
+    #         user = User.objects.get(id=id)
+    #     except Exception:
+    #         return None
+    #     # 这是关注的逻辑
+    #     friendship = FriendShip()
+    #     friendship.follower = self
+    #     friendship.following = user
+    #     friendship.save()
+    #     return True
+    #
+    # def delete_following(self,id):
+    #     try:
+    #         user = User.objects.get(id=id)
+    #     except Exception:
+    #         return None
+    #         # 这是关注的逻辑
+    #     friendship = FriendShip.objects.filter(follower=self,following=user).all()
+    #     if friendship:
+    #         friendship.delete()#取消关注
 
 
 

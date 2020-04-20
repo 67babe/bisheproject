@@ -1,10 +1,10 @@
-{% extends 'login/base.html' %}
+{% extends 'login/unlogin_base.html' %}
 {% block title %}主页{% endblock %}
 {% block content %}
     {% if request.session.is_login %}
     <h2>你好，{{ request.session.user_name }}!欢迎回来！👏 </h2>
     {% else %}
-<h1>你尚未登录，只能访问公开内容！</h1>
+
     <div style="position:fixed;left:42%;top:13%;">
      <p style="font-size:150px">🐈</p>
     </div>

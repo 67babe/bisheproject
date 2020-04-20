@@ -141,18 +141,18 @@ def my_follower(request):#我的粉丝
     return render(request, 'home/my_follower.html', locals())
 
 
-def set_following(request):  # 添加关注
-    userid = request.session.get('user_id')
-    user = User.objects.get(id=userid)
-    user.set_following()
-    return  HttpResponse('关注成功')
-
-
-def delete_following(request):#取消关注
-    userid = request.session.get('user_id')
-    user = User.objects.get(id=userid)
-    user.delete_following()
-    return  HttpResponse('取消关注成功')
+# def set_following(request):  # 添加关注
+#     userid = request.session.get('user_id')
+#     user = User.objects.get(id=userid)
+#     user.set_following()
+#     return  HttpResponse('关注成功')
+#
+#
+# def delete_following(request):#取消关注
+#     userid = request.session.get('user_id')
+#     user = User.objects.get(id=userid)
+#     user.delete_following()
+#     return  HttpResponse('取消关注成功')
 
 
 
@@ -304,9 +304,6 @@ def user_setting(request):
         default_data = {'username': user.name, 'email': user.email, 'sex': user.sex, 'profile': user.profile,'imag':user.user_imag}
         form = ProfileForm(default_data)
         return render(request, 'home/user_setting.html', {'form': form, 'user': user})
-
-    # user = User.objects.get(name=username)  # 直接从数据库里搜
-    # userid = get_object_or_404(User, pk=pk)
     data = User.objects.get(id=userid)
     pets = Pet.objects.filter(user_id=userid)
     return render(request, 'home/home.html', locals())
