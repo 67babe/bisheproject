@@ -1,5 +1,20 @@
+{#{% extends 'login/base.html' %}#}
+{##}
+{#{% block title %}搜索结果{% endblock %}#}
+{#{% block content %}#}
+{#  {% if error_msg %}#}
+{#    <p>{{ error_msg }}</p>#}
+{#  {% endif %}#}
+{##}
+{#  {% for dynamic in dynamic_list %}#}
+{#    标题{{ dynamic.dyn_title }}#}
+{#  {% empty %}#}
+{#    <div class="no-post">暂时还没有发布的文章！</div>#}
+{#  {% endfor %}#}
+{#{% endblock %}#}
+
 {% extends 'login/base.html' %}
-{% block title %}动态{% endblock %}
+{% block title %}搜索结果{% endblock %}
 
 {% block content %}
     {% if request.session.is_login %}
@@ -28,7 +43,7 @@
 
 
         <div style="display: flex; flex-wrap: wrap; ">
-            {% for data in data reversed %}
+            {% for data in dynamic_list reversed %}
                 <div style="margin-left: 15px;margin-bottom:30px;display: flex;flex-direction: column; width:250px">
                     <div style="display: flex; flex-wrap: wrap;align-items: center;justify-content: space-between;margin-bottom: 4px">
 
@@ -125,6 +140,9 @@
                         <div style="font-size: 12px;color: #9d9d9d">{{ data.dyn_time }}</div>
                     </div>
                 </div>
+                {% empty %}
+    <div class="no-post">啥都没找到哦！赶快自己发布一条吧！</div>
+
             {% endfor %}
         </div>
 

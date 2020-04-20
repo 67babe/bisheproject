@@ -22,7 +22,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^$', views.index),
+    url(r'^$', views.unlogin_index),
+    url(r'^unlogin_index/', views.unlogin_index),
     url(r'^index/', views.index),
     url(r'^login/', views.login),
     url(r'^register/', views.register),
@@ -40,8 +41,7 @@ urlpatterns = [
     url(r'^add_pet/', views.add_pet),#添加宠物
     url(r'^my_following/', views.my_following),#我的关注
     url(r'^my_follower/', views.my_follower),#我的粉丝
-    # url(r'^delete_following/', views.delete_following),#我的关注
-    # url(r'^set_following/', views.set_following),#我的粉丝
     path('show_profile/<int:userid>/', views.show_profile,name='show_profile'),#显示用户个人页面
+    url(r'^search_dynamic/$', views.search_dynamic, name='search_dynamic'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)#指定和映射静态文件的路径
