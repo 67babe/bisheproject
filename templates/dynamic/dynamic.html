@@ -13,7 +13,17 @@
             <div style="font-size: 28px;margin-left: 10px;margin-bottom: 20px">你好，{{ request.session.user_name }} !
                 欢迎回来！👏
             </div>
-            <input placeholder="搜索" style="width: 300px;height: 36px;margin-right: 20px"/>
+            <form role="search" method="get" id="searchform" action="/search_dynamic/">
+              {% csrf_token %}
+              <input type="search" name="q" placeholder="Search" required>
+              <button type="submit">🔍<span class="ion-ios-search-strong"></span></button>
+            </form>
+
+{#            <form method="get" action="/search/">#}
+{#              {% csrf_token %}#}
+{#              <input type="search_dynamic" placeholder="搜索" required>#}
+{#              <button type="submit">搜索</button>#}
+{#            </form>#}
         </div>
 
 

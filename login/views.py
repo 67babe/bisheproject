@@ -31,6 +31,9 @@ def index(request):
     pass
     return render(request, 'login/index.html',locals())
 
+def unlogin_index(request):
+    pass
+    return render(request, 'login/unlogin_index.html',locals())
 
 def login(request):
     pass
@@ -162,6 +165,19 @@ def hash_code(s, salt='67babe'):  # 加点盐嘻嘻
     h.update(s.encode())  # update方法只接收bytes类型
     return h.hexdigest()
 
+def search_dynamic(request):
+    q = request.GET.get('q')
+    print(q)
+    error_msg = ''
+    if not q:
+        error_msg = '请输入关键词'
+        return render(request, 'dynamic/dynamic.html', {'error_msg': error_msg})
+
+    dynamic_list = Dynamic.objects.filter(dyn_title__icontains=q)
+    if dynamic_list:
+        print('找到了')
+    return render(request, 'dynamic/search_dynamic_result.html', {'error_msg': error_msg,
+                                                 'dynamic_list': dynamic_list})
 
 def dynamic(request):
     if not request.session.get('is_login', None):
