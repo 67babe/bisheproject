@@ -9,7 +9,7 @@
     <title>上传动态</title>
 </head>
 <body>
-<form method="post" enctype="multipart/form-data" action="/upload_dynamic_handle/">
+<form class="form-group" method="post" enctype="multipart/form-data" action="/upload_dynamic_handle/">
     {% csrf_token %}
     标题：<input type="text " name="title"><br/>
     正文：<input type="text " name="text"><br/>
@@ -22,3 +22,4 @@
     {% endif %}
 {% endblock %}
 </html>
+

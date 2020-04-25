@@ -187,8 +187,24 @@ def dynamic(request):
     user = User.objects.get(id=userid)
     user_head = User.objects.get(id=userid)  # 专门做头像用
     data = Dynamic.objects.all() # .order_by('-pub_date')
+    comment=Discuss.objects.all()
     return render(request, 'dynamic/dynamic.html',locals())
 
+def my_dynamic(request):
+    if not request.session.get('is_login', None):
+        # 如果本来就未登录，也就没有登出一说
+        return redirect("/index/")
+    userid = request.session.get('user_id')
+    user = User.objects.get(id=userid)
+    user_head = User.objects.get(id=userid)  # 专门做头像用
+    data = Dynamic.objects.filter(user_id=userid) # .order_by('-pub_date')
+    return render(request, 'dynamic/my_dynamic.html',locals())
+
+# def delete_dynamic(request):
+#     dynamic=Dynamic.objects.get(dynamic_id=id)
+#     if dynamic:
+#         dynamic.delete()#删除动态
+#     return HttpResponseRedirect('/my_dynamic/')
 
 def show_upload_dynamic(request):
     return render(request, 'dynamic/upload_dynamic.html')
@@ -214,6 +230,8 @@ def upload_dynamic_handle(request):
 
 
 
+
+
 def home(request,userid):
     if not request.session.get('is_login', None):
         # 如果本来就未登录，也就没有登出一说
@@ -226,7 +244,10 @@ def home(request,userid):
     user_head = User.objects.get(id=userid)  # 专门做头像用
     pets = Pet.objects.filter(user_id=userid)
     dynamic=Dynamic.objects.filter(user_id=userid)
-    dynamic2=dynamic.order_by('dynamic_id')[:5]
+    dynamic2=dynamic.order_by('dynamic_id')[:3]
+    pets2 = pets.order_by('pet_id')[:3]
+    following_number =FriendShip.objects.filter(following=userid)
+    follower_number = FriendShip.objects.filter(follower=userid)
     return render(request, 'home/home.html', locals())
 
 def show_profile(request,userid):
@@ -242,8 +263,11 @@ def show_profile(request,userid):
     to_follow_user = User.objects.get(id=userid)    # 通过URL获取的对象信息，用于Follow
     data = User.objects.get(id=userid)
     pets = Pet.objects.filter(user_id=userid)
+    pets2=pets.order_by('pet_id')[:2]
     dynamic = Dynamic.objects.filter(user_id=userid)
     dynamic2 = dynamic.order_by('dynamic_id')[:5]
+    following_number = FriendShip.objects.filter(following=userid)
+    follower_number = FriendShip.objects.filter(follower=userid)
 
     if not FriendShip.objects.filter(follower=self_user, following=to_follow_user): # 如果登录用户和对象用户没有关注
         show_button = "关注"
@@ -346,27 +370,8 @@ def pwd_change(request):
                     return render(request, 'home/pwd_change.html', locals())
                 user.password = new_password
                 user.save()
-                return redirect('/home/')
+                return redirect('/home/'+str(userid))
     form = PwdForm()
     return render(request, 'home/pwd_change.html', locals())
 
 
-def show_upload(request):
-    return render(request, 'dynamic/upload_pic.html')
-
-
-def upload_handle(request):
-    # 1。获取上传的图片的处理对象
-    pic = request.FILES['pic']
-
-    # 2。创建一个文件
-    save_path = '%s/booktest/%s' % (settings.MEDIA_ROOT, pic.name)
-    with open(save_path, 'wb')as f:
-        # 3。获取上传文件的内容并写到创建的文件中
-        for content in pic.chunks():
-            f.write(content)
-    # 4。在数据库中保存上传记录（路径）
-    PicTest.objects.create(goods_pic='booktest/%s' % pic.name)
-
-    # return render(request, 'dynamic/upload_pic.html')
-    return HttpResponse('ok')

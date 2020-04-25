@@ -2,63 +2,185 @@
 {% block title %}其他用户主页{% endblock %}
 {% block content %}
     {% if request.session.is_login %}
-    <h2>你好，{{ request.session.user_name }}   !   欢迎回来！👏 </h2>
-<html lang="en">
-<body>
-{#{% if user.is_authenticated %}#}
-<tr>
-<h1>这是用户{{ data.name }}的个人界面</h1>
-<div style="width: 120px;height: 120px; border-radius:250px;overflow: hidden;">
-    <img src="{{ MEDIA_URL }}{{ data.user_imag}}" height="120px" width="120px">
-</div>
-{% if userid2 != user_info.id %}
-    <form method="post" action="{% url 'show_profile' user_info.id %}">
-        {% csrf_token %}
-        <input type="submit" value="{{ show_button }}" >
-    </form>
-    {% endif %}
-        <div>昵称：{{ data.name }}  性别：{{ data.sex }}</div> <br/>
-            <div>邮箱：{{ data.email }}</div> <br/>
-            <div>个人简介：{{ data.profile }}</div> <br/>
-            <div>总点赞数❤️ pass </div><br/>
-                        <div>粉丝 pass </div><br/>
-                        <div>关注 pass </div><br/>
 
-    <div>他的猫猫：</div> <br/>
-        <table border="1">
-            {% for pets in pets%}
-             <th>
-                <div>{{ pets.pet_name }} {{ pets.pet_sex }} {{ pets.pet_age }}岁 </div> <br/>
-
-                 <div> <img src="{{ MEDIA_URL }}{{ pets.pet_imag}}" height="120px" width="120px"></div>
-
-             </th>
+        <html lang="en">
+        <body>
+        {#{% if user.is_authenticated %}#}
+        <tr>
+            {#            <h1>这是用户{{ data.name }}的个人界面</h1>#}
 
 
-            {% endfor %}
-        </table><br/><br/>
+            <div style="position: absolute;top: 100px;left: 250px;box-shadow: 5px 5px 10px #999999;
+         width: 250px;height: 250px; border-radius:250px;overflow: hidden;">
+                <img src="{{ MEDIA_URL }}{{ data.user_imag }}" height="250px" width="250px">
+            </div>
 
-    <div>他的动态：</div> <br/>
-        <table border="1">
-            {% for dynamic in dynamic%}
-             <th>
-                <div>{{ dynamic.dyn_title }}  </div>
-                 <div>{{ dynamic.dyn_text  }}  </div>
-                 <div>{{ dynamic.dyn_time  }}  </div>
-                 <div> <img src="{{ MEDIA_URL }}{{ dynamic.dyn_imag }}" height="120px" width="120px" ></div>
+            {#        绝对定位猫头#}
+            <div style="position: absolute;top: 415px;right: 230px;box-shadow: 5px 5px 10px #999999;
+         width: 250px;height: 250px; border-radius:250px;overflow: hidden;">
+                <img src="/media/others_img/IMG_1311.jpg" height="250px" width="250px">
+            </div>
 
-             </th>
-            {% endfor %}
+            {#        个人标签#}
+            <div style="margin-top:100px;margin-left: 280px;
+        border: solid 1px;border-color: #dbdbdb;height:250px;width:900px;box-shadow: 5px 5px 10px #999999;border-radius:10px">
+                <div style="margin-left: 90%;margin-top:2% ">
+                    {% if userid2 != user_info.id %}
+                    <form method="post" action="{% url 'show_profile' user_info.id %}">
+                        {% csrf_token %}
+                        <input type="submit" value="{{ show_button }}">
+                    </form>
+                {% endif %}
 
-        </table>
+                </div>
+                <div style="position:relative;left: 27%;top: -30px">
+                    <p style="font-size: 40px;display: inline">{{ data.name }}</p>
+                    {% if data.sex == '男' %}
+                        <p style="font-size: 30px;display: inline"> &nbsp;&nbsp;🚹</p>
+                    {% else %}
+                        <p style="font-size: 30px;display: inline">&nbsp;&nbsp;🚺</p>
+                    {% endif %}
+                    <p style="font-size: 15px;color: #5e5e5e;display: inline">&nbsp&nbsp&nbsp{{ data.email }}</p>
+                </div>
+
+                <div style="position:relative;left: 27%;top: -10px">
+                    <p style="font-size: 20px;color: #5e5e5e;display: inline">{{ data.profile }}</p>
+
+                </div>
+
+                <div style="position:relative;left: 26%;top: 20px">
+                    <form method="get" enctype="multipart/form-data" action="/my_following/"
+                          style="display: inline;margin-left: 10px">
+                        {% csrf_token %}
+                        <input type="submit" value="关注  {{ follower_number.count }}️"
+                               style="font-size: 20px ;color: #0f0f0f;border: 0px ;background:#dcdcdc ;outline:gainsboro; display: inline;border-radius:8px;"
+                               class="ok">
+                    </form>
+
+                    <form method="get" enctype="multipart/form-data" action="/my_follower/"
+                          style="display: inline;margin-left: 10px">
+                        <input type="submit" value="粉丝  {{ following_number.count }}"
+                               style="font-size: 20px ;color: #0f0f0f;border: 0px ;background:#dcdcdc;outline:gainsboro;display: inline; border-radius:8px;"
+                               class="ok">
+                    </form>
 
 
-    </tr>
-</body>
+                    <form method="get" enctype="multipart/form-data" action="/pet/"
+                          style="display: inline;margin-left: 10px">
+                        <input type="submit" value="猫猫  {{ pets.count }}"
+                               style="font-size: 20px ;color: #0f0f0f;border: 0px ;background:#dcdcdc;outline:gainsboro;display: inline; border-radius:8px;"
+                               class="ok">
+                    </form>
+
+                </div>
+
+            </div>
+            <div style="margin-top:80px;margin-left: 280px;margin-bottom: 100px;
+        border: solid 1px;border-color: #dbdbdb;height:480px;width:900px;box-shadow: 5px 5px 10px #999999;border-radius:10px">
+                {#            占位置，没用#}
+                <div style="margin-left: 80%;margin-top:2% ">
+                    <form method="get" enctype="multipart/form-data" action="/pet/">
+                        {% csrf_token %}
+                        <input type="submit" value="️"
+                               style="font-size: 30px ;border: 10px ;background: none;outline:gainsboro;transform: rotateY(180deg); "
+                               class="ok">
+                    </form>
+                </div>
+
+                <div style="position:relative;left: 5%;top: -30px">
+                    <p style="font-size: 40px;display: inline">我的猫猫🐱</p>
+                </div>
+
+                <div style="margin-top: 20px;margin-left: 20px">
+                    <table>
+                        {% for pets in pets2 %}
+                            <th class="表格小图">
+                                <div><img src="{{ MEDIA_URL }}{{ pets.pet_imag }}" height="200px" width="200px"
+                                          style="border-radius:10px;margin-left: 20px;box-shadow: 1px 1px 8px #999999;cursor: pointer;transition: all 0.6s;">
+                                    <div style="margin-left: 30%">
+                                        <p style="font-size: 30px;color: #5e5e5e;display: inline">{{ pets.pet_name }}</p>
+                                        {#                                     <p style="font-size: 10px;color: #5e5e5e;display: inline">{{ pets.pet_sex }}</p>#}
+                                        <p style="font-size: 10px;color: #5e5e5e;display: inline">{{ pets.pet_age }}岁</p>
+                                    </div>
+                                </div>
+                            </th>
+                        {% endfor %}
+                        <th>
+                            <div style="margin-left: 50%;margin-top:0% ">
+                                <form method="get" enctype="multipart/form-data" action="/add_pet/">
+                                    {% csrf_token %}
+                                    <input type="submit" value="➕️"
+                                           style="font-size: 80px ;border: 10px ;background: none;outline:gainsboro;transform: rotateY(180deg); "
+                                           class="ok">
+                                </form>
+                            </div>
+                        </th>
+                    </table>
+                    <div style="margin-left: 95%;margin-top:7% ">
+                        <form method="get" enctype="multipart/form-data" action="/pet/">
+                            {% csrf_token %}
+                            <input type="submit" value=">>"
+                                   style="color: #5e5e5e;font-size: 20px ;border: 10px ;background: none;outline:gainsboro; "
+                                   class="ok">
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div>昵称：{{ data.name }} 性别：{{ data.sex }}</div>
+            <br/>
+            <div>邮箱：{{ data.email }}</div>
+            <br/>
+            <div>个人简介：{{ data.profile }}</div>
+            <br/>
+            <div>总点赞数❤️ pass</div>
+            <br/>
+            <div>粉丝 pass</div>
+            <br/>
+            <div>关注 pass</div>
+            <br/>
+
+            <div>他的猫猫：</div>
+            <br/>
+            <table border="1">
+                {% for pets in pets %}
+                    <th>
+                        <div>{{ pets.pet_name }} {{ pets.pet_sex }} {{ pets.pet_age }}岁</div>
+                        <br/>
+
+                        <div><img src="{{ MEDIA_URL }}{{ pets.pet_imag }}" height="120px" width="120px"></div>
+
+                    </th>
+
+
+                {% endfor %}
+            </table>
+            <br/><br/>
+
+            <div>他的动态：</div>
+            <br/>
+            <table border="1">
+                {% for dynamic in dynamic %}
+                    <th>
+                        <div>{{ dynamic.dyn_title }}  </div>
+                        <div>{{ dynamic.dyn_text }}  </div>
+                        <div>{{ dynamic.dyn_time }}  </div>
+                        <div><img src="{{ MEDIA_URL }}{{ dynamic.dyn_imag }}" height="120px" width="120px"></div>
+
+                    </th>
+                {% endfor %}
+
+            </table>
+
+
+        </tr>
+        </body>
 
 
     {% else %}
-    <h1>没有登录用户</h1>
+        <h1>没有登录用户</h1>
     {% endif %}
 {% endblock %}
 </html>

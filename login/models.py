@@ -86,8 +86,12 @@ class Dynamic(models.Model):
     dyn_imag = models.ImageField(verbose_name='动态图片', upload_to='dynamic_img/', null=True, blank=True)
 
     def __str__(self):
-        return self.dyn_text
+        return self.dyn_title
 
+    def delete_Dynamic(self,id):
+        dynamic=Dynamic.objects.get(dynamic_id=id)
+        if dynamic:
+            dynamic.delete()#删除动态
 
 class Pet(models.Model):
 
@@ -115,7 +119,7 @@ class Discuss(models.Model):
     dis_time = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
-        return self.discuss_id
+        return self.dis_text
 
 
 class Question(models.Model):
