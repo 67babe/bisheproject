@@ -14,7 +14,7 @@ class User(models.Model):
     name = models.CharField(max_length=128, unique=True)
     password = models.CharField(max_length=256)
     email = models.EmailField(unique=True)
-    user_imag=models.ImageField(verbose_name='用户头像', upload_to='user_img/', null=True, blank=True)
+    user_imag=models.ImageField(verbose_name='用户头像', upload_to='user_img/', default="user_img/默认头像.jpg",null=True, blank=True)
     profile=models.CharField(max_length=1000,null=True, blank=True)
     sex= models.CharField(max_length=32,choices=gender,default='男')
 

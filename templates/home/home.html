@@ -13,24 +13,27 @@
         {#    <meta charset="UTF-8">#}
         {#    <title>个人主页</title>#}
         {#</head>#}
+
+          <p style="margin: 0 auto;font-size: 50px;text-align:center;margin-top: 10px">个人主页🏠️</p>
+
         {#        绝对定位个人头像#}
-        <div style="position: absolute;top: 100px;left: 250px;box-shadow: 5px 5px 10px #999999;
+        <div style="position: absolute;top: 120px;left: 250px;box-shadow: 5px 5px 10px #999999;
          width: 250px;height: 250px; border-radius:250px;overflow: hidden;">
             <img src="{{ MEDIA_URL }}{{ data.user_imag }}" height="250px" width="250px">
         </div>
 
         {#        绝对定位猫头#}
-        <div style="position: absolute;top: 415px;right: 230px;box-shadow: 5px 5px 10px #999999;
+        <div style="position: absolute;top: 455px;right: 230px;box-shadow: 5px 5px 10px #999999;
          width: 250px;height: 250px; border-radius:250px;overflow: hidden;">
             <img src="/media/others_img/IMG_1311.jpg" height="250px" width="250px">
         </div>
         {#        绝对定位动态头#}
-         <div style="position: absolute;top: 980px;left: 250px;box-shadow: 5px 5px 10px #999999;
+         <div style="position: absolute;top: 1020px;left: 250px;box-shadow: 5px 5px 10px #999999;
          width: 250px;height: 250px; border-radius:250px;overflow: hidden;">
             <img src="/media/others_img/IMG_1315.jpg" height="250px" width="250px">
         </div>
         {#        个人标签#}
-        <div style="margin-top:100px;margin-left: 280px;
+        <div style="margin-top:50px;margin-left: 280px;
         border: solid 1px;border-color: #dbdbdb;height:250px;width:900px;box-shadow: 5px 5px 10px #999999;border-radius:10px">
             <div style="margin-left: 90%;margin-top:2% ">
                 <form method="get" enctype="multipart/form-data" action="/user_setting/">
@@ -44,9 +47,9 @@
             <div style="position:relative;left: 27%;top: -30px">
                 <p style="font-size: 40px;display: inline">{{ data.name }}</p>
                 {% if data.sex == '男' %}
-                    <p style="font-size: 30px;display: inline"> &nbsp;&nbsp;🚹</p>
+                    <p style="font-size: 30px;display: inline"> &nbsp;&nbsp;👦🏻</p>
                 {% else %}
-                    <p style="font-size: 30px;display: inline">&nbsp;&nbsp;🚺</p>
+                    <p style="font-size: 30px;display: inline">&nbsp;&nbsp;👧🏻</p>
                 {% endif %}
                 <p style="font-size: 15px;color: #5e5e5e;display: inline">&nbsp&nbsp&nbsp{{ data.email }}</p>
             </div>
@@ -127,7 +130,7 @@
                         </div>
                     </th>
                 </table>
-            <div style="margin-left: 95%;margin-top:7% ">
+            <div style="position: relative;top: 90%;left: 95%;margin-top:7% ">
                             <form method="get" enctype="multipart/form-data" action="/pet/">
                                 {% csrf_token %}
                                 <input type="submit" value=">>"
@@ -181,7 +184,7 @@
                         </th>
                     {% endfor %}
                 </table>
-            <div style="margin-left: 95%;margin-top:5% ">
+            <div style="position: relative;top: 90%;left: 95%; ">
                             <form method="get" enctype="multipart/form-data" action="/my_dynamic/">
                                 {% csrf_token %}
                                 <input type="submit" value=">>"
@@ -211,7 +214,7 @@
 {##}
 
         </body>
-        <a href="/pwd_change">修改密码</a>
+
 
 
     {% else %}

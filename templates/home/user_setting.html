@@ -1,32 +1,107 @@
+{% extends 'login/base.html' %}
+{% load staticfiles %}
+{% block title %}个人主页{% endblock %}
 {% block content %}
-<h2>个人信息</h2>
-<ul>
-    <li>昵称: {{ user.name }} </li>
-    <li>邮箱地址: {{ user.email }} </li>
+    {% if request.session.is_login %}
+        {#        <h2>你好，{{ request.session.user_name }} ! 欢迎回来！👏 </h2>#}
+        <html lang="en">
+        {#        <link rel="stylesheet"  href="{% static 'css/index3.css' %}" />#}
 
-</ul>
-<h2>修改个人资料</h2>
+        <link rel="stylesheet" href="{% static 'css/index3.css' %}"/>
 
-<div class="form-wrapper">
-   <form method="post" action="" enctype="multipart/form-data">
-      {% csrf_token %}
-      {% for field in form %}
-           <div class="fieldWrapper">
-        {{ field.errors }}
-        {{ field.label_tag }} {{ field }}
-        {% if field.help_text %}
-             <p class="help">{{ field.help_text|safe }}</p>
-        {% endif %}
-           </div>
-        {% endfor %}
-      <div class="button-wrapper submit">
-         <input type="submit" value="提交" />
-     <botton><a href="/home/{{ user.id }}/">返回</a></botton>
+        {#<head>#}
+        {#    <meta charset="UTF-8">#}
+        {#    <title>个人主页</title>#}
+        {#</head>#}
 
-   </form>
-</div>
+        <p style="margin: 0 auto;font-size: 50px;text-align:center;margin-top: 10px">修改个人资料🛠️</p>
 
+        {#        绝对定位个人头像#}
+        <div style="position: absolute;top: 120px;left: 1000px;box-shadow: 5px 5px 10px #999999;
+         width: 250px;height: 250px; border-radius:250px;overflow: hidden;">
+            <img src="{{ MEDIA_URL }}{{ user.user_imag }}" height="250px" width="250px">
+        </div>
 
-{#     <a href="{% url 'users:pwd_change' user.id %}">Password change</a>#}
+        {#        个人标签#}
+        <div style="margin-top:50px;margin-bottom:50px;margin-left: 280px;border: solid 1px;border-color: #dbdbdb;height:600px;width:900px;box-shadow: 5px 5px 10px #999999;border-radius:10px">
+            <div style="margin-left: 90%;margin-top:2% ">
+                {#                占位置#}
+                <form method="get" enctype="multipart/form-data" action="/user_setting/">
+                    {% csrf_token %}
+                    <input type="submit" value="️"
+                           style="font-size: 30px ;border: 10px ;background: none;outline:gainsboro;transform: rotateY(180deg); "
+                           class="ok">
+                </form>
+            </div>
+        <div class="form-wrapper">
+         
+        <form method="post" action="" enctype="multipart/form-data">
+                 {% csrf_token %}
+                 {% for field in form %}
+                     
+            <div class="fieldWrapper">
+                       {{ field.errors }}
+                       {{ field.label_tag }} {{ field }}
+                       {% if field.help_text %}
+                            <p class="help">{{ field.help_text|safe }}</p>
+                       {% endif %}
+                         
+            </div>
+                   {% endfor %}
+                 
+            <div class="button-wrapper submit">
+                        <input type="submit" value="提交"/>
+                <botton><a href="/home/{{ user.id }}/">返回</a></botton>
 
+                 
+        </form>
+    </div>
+
+        </div>
+
+        </body>
+
+    {% else %}
+        <h1>没有登录用户</h1>
+    {% endif %}
 {% endblock %}
+</html>
+
+
+
+
+        <li>昵称: {{ user.name }} </li>
+           
+        <li>邮箱地址: {{ user.email }} </li>
+
+
+    <h2>修改个人资料</h2>
+
+{#    <div class="form-wrapper">#}
+{#         #}
+{#        <form method="post" action="" enctype="multipart/form-data">#}
+{#                 {% csrf_token %}#}
+{#                 {% for field in form %}#}
+{#                     #}
+{#            <div class="fieldWrapper">#}
+{#                       {{ field.errors }}#}
+{#                       {{ field.label_tag }} {{ field }}#}
+{#                       {% if field.help_text %}#}
+{#                            <p class="help">{{ field.help_text|safe }}</p>#}
+{#                       {% endif %}#}
+{#                         #}
+{#            </div>#}
+{#                   {% endfor %}#}
+{#                 #}
+{#            <div class="button-wrapper submit">#}
+{#                        <input type="submit" value="提交"/>#}
+{#                <botton><a href="/home/{{ user.id }}/">返回</a></botton>#}
+{##}
+{#                 #}
+{#        </form>#}
+{#    </div>#}
+
+
+    {#     <a href="{% url 'users:pwd_change' user.id %}">Password change</a>#}
+
+

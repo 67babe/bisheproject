@@ -5,10 +5,10 @@
     {% if request.session.is_login %}
 
 {#        发布动态、欢迎回来、动态搜索#}
-        <div style="position: fixed; top:90%;left:94%">
+        <div style="position: fixed; top:85%;left:94%" >
             <form method="get" enctype="multipart/form-data" action="/show_upload_dynamic/">
                 {% csrf_token %}
-                <input type="submit" value="📝" style="font-size: 50px ;border: 0px "class="ok">
+                <input  type="submit" value="📝"  style="font-size: 50px ;border: 0px;background: none "class="ok">
             </form>
         </div>
         <div style="display: flex; justify-content: space-between">
@@ -35,7 +35,7 @@
                             <div style="display: flex;align-items: center;">
                                 <input type="image" src="{{ MEDIA_URL }}{{ data.user.user_imag }}" height="30px"
                                        width="30px"
-                                       style="border-radius: 50%;" value="查看用户主页">
+                                       style="border-radius: 50%;" value="查看用户个人主页">
                                 <div style="margin-left: 4px">{{ data.user }}</div>
 
                             </div>
@@ -52,7 +52,7 @@
                              data-target="#exampleModal"
                              onclick="Values('{{ data.user }}','{{ data.dyn_title }}','{{ data.dyn_text }}','{{ data.dyn_time }}'
                                      ,'{{ MEDIA_URL }}{{ data.dyn_imag }}','{{ MEDIA_URL }}{{ data.user.user_imag }}',
-                                     '　👤{{comment.user}}：  {{comment.dis_text}}：         ⏰{{ comment.dis_time }}')">
+                                     '　👤{{comment.user}}：  {{comment.dis_text}}：         🕘{{ comment.dis_time }}')">
 
                              {% else %}
 

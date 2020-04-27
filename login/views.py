@@ -28,7 +28,9 @@ import hashlib
 
 
 def index(request):
-    pass
+    if request.session.get('is_login', None):
+        userid = request.session.get('user_id')
+        user_head = User.objects.get(id=userid)  # 专门做头像用
     return render(request, 'login/index.html',locals())
 
 def unlogin_index(request):
@@ -338,7 +340,7 @@ def user_setting(request):
             user.profile = form.cleaned_data['profile']
             user.user_imag = request.FILES['imag']
             user.save()
-        return HttpResponseRedirect('/home/')
+        return HttpResponseRedirect('/home/'+str(userid))
 
     else:
         default_data = {'username': user.name, 'email': user.email, 'sex': user.sex, 'profile': user.profile,'imag':user.user_imag}

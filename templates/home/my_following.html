@@ -2,55 +2,88 @@
 {% block title %}我的关注{% endblock %}
 {% block content %}
     {% if request.session.is_login %}
-    <h2>你好，{{ request.session.user_name }}   !   欢迎回来！👏 </h2>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>我的关注</title>
-</head>
-<body>
 
-<tr>
-    <div>我的关注：</div> <br/>
-        <table border="1">
-            {% for data in data %}
-             <th>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>我的关注</title>
+        </head>
+        <body>
 
-             <form method="get" enctype="multipart/form-data" action="/show_profile/{{ data.id }}/">
-{#                 点击头像查看用户页面#}
-                {% csrf_token %}
-                  <div style="width: 120px;height: 120px; border-radius:250px;overflow: hidden;">
-                    <input type="image" src=" {{ MEDIA_URL }}{{data.user_imag }}" height="120px" width="120px" value="查看用户主页">
-                 </div>
-            </form>
-{#                 <div style="width: 120px;height: 120px; border-radius:250px;overflow: hidden;">#}
-{#                     <img src="{{ MEDIA_URL }}{{data.user_imag }}" height="120px" width="120px" >#}
-{#                 </div>#}
-                 <div>用户id:{{ data.id}}</div> <br/>
-                <div>{{ data.name}}</div> <br/>
-                 <div>{{ data.profile}}</div> <br/>
-{#                <form action="del" method="POST">#}
-{#                    {% csrf_token %}#}
-{##}
-{#                    <input type="submit" value="清库">#}
-{##}
-{#                </form>#}
+             <p style="margin: 0 auto;font-size: 50px;text-align:center;margin-top: 10px">我的关注️</p>
+              <p style="margin: 0 auto;font-size: 50px;text-align:center;margin-bottom: 40px;margin-top: 0px">🧍🏻‍♂️🧍🏻🧍🏻‍♀️🧍🏻‍♂️🧍🏻🧍🏻‍♀️🧍🏻‍♂️🧍🏻🧍🏻‍♀️️️</p>
 
-             </th>
+        {% for data in data %}
+            <div style="margin: 0 auto;margin-top: 20px;margin-bottom: 100px;
+         border: solid 1px;border-color: #dbdbdb;height:230px;width:800px;box-shadow: 5px 5px 10px #999999;border-radius:10px">
+                <div style="position: relative;top: -60px;left: -70px;">
+                    <form method="get" enctype="multipart/form-data" action="/show_profile/{{ data.id }}/">
+                        {#                     点击头像查看用户页面#}
+                        {% csrf_token %}
+{#                        遮罩#}
+                        <div style="width: 200px;height: 200px; border-radius:250px;overflow: hidden;box-shadow: 5px 5px 10px #999999">
+                            <input type="image" src=" {{ MEDIA_URL }}{{ data.user_imag }}" height="200px" width="200px"
+                                   value="查看用户主页">
+                        </div>
+                    </form>
+                </div>
+            <div style="position:relative;left: 20%;top: -160px">
+                <p style="font-size: 40px;display: inline">{{ data.name }}</p>
+                {% if data.sex == '男' %}
+                    <p style="font-size: 30px;display: inline"> &nbsp;&nbsp;👦🏻</p>
+                {% else %}
+                    <p style="font-size: 30px;display: inline">&nbsp;&nbsp;👧🏻</p>
+                {% endif %}
+                <p style="font-size: 15px;color: #5e5e5e;display: inline">&nbsp&nbsp&nbsp{{ data.email }}</p>
+            </div>
+
+            <div style="position:relative;left: 20%;top: -130px">
+                <p style="font-size: 30px;color: #5e5e5e;display: inline">{{ data.profile }}</p>
+            </div>
+            <div style="position:relative;left: 19%;top: -100px">
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+            </div>
+        {% endfor %}
+        </div>
+
+        {#                <tr>#}
+        {#            <div>我的粉丝：</div>#}
+        {#            <br/>#}
+        {#            <table border="1">#}
+        {#                {% for data in data %}#}
+        {#                    <th>#}
+        {#                        <form method="get" enctype="multipart/form-data" action="/show_profile/{{ data.id }}/">#}
+        {#                     点击头像查看用户页面#}
+        {#                            {% csrf_token %}#}
+        {#                            <div style="width: 120px;height: 120px; border-radius:250px;overflow: hidden;">#}
+        {#                                <input type="image" src=" {{ MEDIA_URL }}{{ data.user_imag }}" height="120px"#}
+        {#                                       width="120px" value="查看用户主页">#}
+        {#                            </div>#}
+        {#                        </form>#}
+        {#                        <div>{{ data.name }}</div>#}
+        {#                        <br/>#}
+        {##}
+        {#                        <div>{{ data.profile }}</div>#}
+        {#                        <br/>#}
+        {##}
+        {##}
+        {#                        </form>#}
+        {##}
+        {#                    </th>#}
+        {##}
+        {##}
+        {#                {% endfor %}#}
+        {##}
+        {##}
+        {#            </table>#}
+        {#        </tr>#}
 
 
-            {% endfor %}
-
-
-</table>
-
-
-
-    </tr>
-</body>
+        </body>
 
     {% else %}
-    <h1>没有登录用户</h1>
+        <h1>没有登录用户</h1>
     {% endif %}
 {% endblock %}
 </html>
