@@ -31,11 +31,12 @@ urlpatterns = [
     url(r'^captcha', include('captcha.urls')), # 增加这一行
     url(r'^dynamic/', views.dynamic),
     url(r'^my_dynamic/', views.my_dynamic),
-    # path(r'^delete_dynamic/<int:dynamic_id>', views.delete_dynamic,name='delete_dynamic'),
+    path('delete_dynamic/<int:dynamic_id>/', views.delete_dynamic,name='delete_dynamic'),
+    # url(r'^delete_dynamic/', views.delete_dynamic),
     # url(r'^show_upload/', views.show_upload),#显示上传图片页面
     # url(r'^upload_handle/', views.upload_handle),#上传图片处理
-    url(r'^show_upload_dynamic', views.show_upload_dynamic),#上传图片处理
-    url(r'^upload_dynamic_handle', views.upload_dynamic_handle),#上传图片处理
+    # url(r'^show_upload_dynamic', views.show_upload_dynamic),#上传图片处理
+    url(r'^upload_dynamic', views.upload_dynamic),#上传动态
     path('home/<int:userid>/', views.home, name='home'),#个人主页
     url(r'^user_setting/', views.user_setting),#用户资料设置
     url(r'^pwd_change/', views.pwd_change),#修改密码

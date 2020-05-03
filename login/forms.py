@@ -51,7 +51,10 @@ class PetForm(forms.Form):
     pet_sex = forms.ChoiceField(label="猫猫性别",choices=gender,required=True)
     pet_img = forms.ImageField(label='猫猫照片',required=False)
 
-
+class DynamicForm(forms.Form):
+    title= forms.CharField(label='标题', max_length=50, required=True,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    text= forms.CharField(label='正文', max_length=50, required=True,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    imag = forms.ImageField(label='动态图片', required=False)
 
 
 

@@ -8,7 +8,7 @@
         <div style="position: fixed; top:90%;left:93%">
             <form method="get" enctype="multipart/form-data" action="/show_upload_dynamic/">
                 {% csrf_token %}
-                <input type="submit" value="📝" style="font-size: 50px ;border: 0px "class="ok">
+                <input type="submit" value="📝" style="background:none;font-size: 50px ;border: 0px "class="ok">
             </form>
         </div>
         <div style="display: flex; justify-content: space-between">
@@ -139,9 +139,10 @@
                         <div style="font-size: 12px;color: #9d9d9d">{{ data.dyn_time }}</div>
                         <div>
 {#                            <form method="post" action="{% url 'delete_dynamic' data.dynamic_id %}">#}
-{#                                {% csrf_token %}#}
+                             <form method="post" action="/delete_dynamic/{{ data.dynamic_id }}/">
+                                {% csrf_token %}
                                 <input type="submit" value="删除" >
-{#                            </form>#}
+                            </form>
                         </div>
                     </div>
                 </div>

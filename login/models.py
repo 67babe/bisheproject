@@ -88,10 +88,13 @@ class Dynamic(models.Model):
     def __str__(self):
         return self.dyn_title
 
-    def delete_Dynamic(self,id):
-        dynamic=Dynamic.objects.get(dynamic_id=id)
+    def delete_Dynamic(self):
+        dynamic=Dynamic.objects.filter(dynamic_id=self.dynamic_id)
         if dynamic:
             dynamic.delete()#删除动态
+            print("删除成功")
+        else:
+            print("找不到，没有删除成功")
 
 class Pet(models.Model):
 

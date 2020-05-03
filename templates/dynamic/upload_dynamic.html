@@ -1,25 +1,91 @@
 {% extends 'login/base.html' %}
-{% block title %}动态{% endblock %}
+{% load staticfiles %}
+{% block title %}发布动态{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+     <link rel="stylesheet" href="{% static 'css/index3.css' %}"/>
+{% endblock %}
 {% block content %}
     {% if request.session.is_login %}
-    <h2>你好，{{ request.session.user_name }}   !   欢迎回来！👏 </h2>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>上传动态</title>
-</head>
-<body>
-<form class="form-group" method="post" enctype="multipart/form-data" action="/upload_dynamic_handle/">
-    {% csrf_token %}
-    标题：<input type="text " name="title"><br/>
-    正文：<input type="text " name="text"><br/>
-    照片 <input type="file" name="pic"> <br/>
-    <input type="submit" value="上传">   <botton><a href="/dynamic">返回</a></botton>
+
+        <html lang="en">
+
+        <p style="margin: 0 auto;font-size: 50px;text-align:center;margin-top: 10px">发布动态🐈</p>
+
+        {#        绝对定位个人头像#}
+        <div style="position: absolute;top: 120px;left: 1000px;box-shadow: 5px 5px 10px #999999;
+         width: 250px;height: 250px; border-radius:250px;overflow: hidden;">
+            <img src="{{ MEDIA_URL }}{{ user.user_imag }}" height="250px" width="250px">
+        </div>
+
+        {#        个人标签#}
+        <div style="margin-top:50px;margin-bottom:50px;margin-left: 280px;border: solid 1px;border-color: #dbdbdb;height:600px;width:900px;box-shadow: 5px 5px 10px #999999;border-radius:10px">
+            <div style="margin-left: 90%;margin-top:2% ">
+                {#                占位置#}
+{#                <form method="get" enctype="multipart/form-data" action="/user_setting/">#}
+{#                    {% csrf_token %}#}
+{#                    <input type="submit" value="️"#}
+{#                           style="font-size: 30px ;border: 10px ;background: none;outline:gainsboro;transform: rotateY(180deg); "#}
+{#                           class="ok">#}
+{#                </form>#}
+            </div>
+        <div class="form-wrapper">
+         
+        <form method="post" action="" enctype="multipart/form-data">
+                 {% csrf_token %}
+{#                 {% for field in form %}#}
+              <div class="form-group" style="width: 50% ;margin-left: 23%;font-size: 25px;margin-bottom: 30px">
+            {% if form.help_text %}
+                            <p class="help">{{ form.help_text|safe }}</p>
+                       {% endif %}
+                    {{ form.title.label_tag }}
+                   {{ form.title}}
+              </div>
+
+            <div class="form-group" style="width: 50%;margin-left: 23%;font-size: 25px;margin-bottom: 30px">
+                {% if form.help_text %}
+                            <p class="help">{{ form.help_text|safe }}</p>
+                       {% endif %}
+                    {{ form.text.label_tag }}
+                   {{ form.text}}
+              </div>
+
+         <div class="form-group" style="width: 50%;margin-left: 23%;font-size: 25px;margin-bottom: 10px">
+                    {{ form.imag.label_tag }}
+{#                   {{ form.imag}}#}
+              </div>
+            <div class="form-group" style="width: 50%;margin-left: 23%;font-size: 10px">
+                {% if form.help_text %}
+                            <p class="help">{{ form.help_text|safe }}</p>
+                       {% endif %}
+{#                    {{ form.imag.label_tag }}#}
+                   {{ form.imag}}
+              </div>
+            {% if message %}
+                        <div class="alert alert-warning">{{ message }}</div>
+                    {% endif %}
+
+              <div style="position: relative;left: -4%;font-size: 40px;display: inline">
+                      <botton><a href="/home/{{ user.id }}/">⬅️</a></botton> 
+
+            </div>
+            <div class="button-wrapper submit" style="position: relative;left: 67%;top: 80%;font-size: 40px;display: inline">
+                        <input type="submit" value="✔️" style="border: none;background: none"/>
+            </div>
+
+
 </form>
-</body>
+    </div>
+
+        </div>
+
+        </body>
+
     {% else %}
-    <h1>没有登录用户</h1>
+        <h1>没有登录用户</h1>
     {% endif %}
 {% endblock %}
 </html>
+
+
 

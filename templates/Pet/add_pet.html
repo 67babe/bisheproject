@@ -1,32 +1,124 @@
+{% extends 'login/base.html' %}
+{% load staticfiles %}
+{% block title %}添加宠物{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+     <link rel="stylesheet" href="{% static 'css/index3.css' %}"/>
+{% endblock %}
 {% block content %}
-<h2>添加猫猫</h2>
-<ul>
-    <li>昵称: {{ user.name }} </li>
-    <li>邮箱地址: {{ user.email }} </li>
+    {% if request.session.is_login %}
 
-</ul>
-<h2>添加名下猫猫</h2>
+        <html lang="en">
 
-<div class="form-wrapper">
-   <form method="post" action="" enctype="multipart/form-data">
-      {% csrf_token %}
-      {% for field in form %}
-           <div class="fieldWrapper">
-        {{ field.errors }}
-        {{ field.label_tag }} {{ field }}
+        <p style="margin: 0 auto;font-size: 50px;text-align:center;margin-top: 10px">添加猫猫🐱️</p>
+
+        {#        绝对定位个人头像#}
+        <div style="position: absolute;top: 120px;left: 1000px;box-shadow: 5px 5px 10px #999999;
+         width: 250px;height: 250px; border-radius:250px;overflow: hidden;">
+            <img src="{{ MEDIA_URL }}{{ user.user_imag }}" height="250px" width="250px">
+        </div>
+
+        {#        个人标签#}
+        <div style="margin-top:50px;margin-bottom:50px;margin-left: 280px;border: solid 1px;border-color: #dbdbdb;height:500px;width:900px;box-shadow: 5px 5px 10px #999999;border-radius:10px">
+            <div style="margin-left: 90%;margin-top:2% ">
+                {#                占位置#}
+{#                <form method="get" enctype="multipart/form-data" action="/user_setting/">#}
+{#                    {% csrf_token %}#}
+{#                    <input type="submit" value="️"#}
+{#                           style="font-size: 30px ;border: 10px ;background: none;outline:gainsboro;transform: rotateY(180deg); "#}
+{#                           class="ok">#}
+{#                </form>#}
+            </div>
+        <div class="form-wrapper">
+         
+        <form method="post" action="" enctype="multipart/form-data">
+                 {% csrf_token %}
+{#                 {% for field in form %}#}
+              <div class="form-group" style="width: 50% ;margin-left: 23%;font-size: 25px;margin-bottom: 30px">
+                    {{ form.pet_name.label_tag }}
+                   {{ form.pet_name}}
+              </div>
+
+            <div class="form-group" style="width: 50%;margin-left: 23%;font-size: 25px;margin-bottom: 30px">
+                    {{ form.pet_age.label_tag }}
+                   {{ form.pet_age}}
+              </div>
+
+        <div class="form-group" style="width: 50%;margin-left: 23%;font-size: 25px;margin-bottom: 30px">
+                    {{ form.pet_sex.label_tag }}
+                   {{ form.pet_sex}}
+              </div>
+
+         <div class="form-group" style="width: 50%;margin-left: 23%;font-size: 25px;margin-bottom: 10px">
+                    {{ form.pet_img.label_tag }}
+{#                   {{ form.imag}}#}
+              </div>
+            <div class="form-group" style="width: 50%;margin-left: 23%;font-size: 10px">
+{#                    {{ form.imag.label_tag }}#}
+                   {{ form.pet_img}}
+              </div>
+{#            <div class="fieldWrapper">#}
+{#                       {{ field.errors }}#}
+{#                       {{ field.label_tag }} {{ field }}#}
+{#                       {% if field.help_text %}#}
+{#                            <p class="help">{{ field.help_text|safe }}</p>#}
+{#                       {% endif %}#}
+{#                         #}
+{#            </div>#}
+{#                   {% endfor %}#}
+{#                 #}
+              <div style="position: relative;left: -4%;font-size: 40px;display: inline">
+                      <botton><a href="/home/{{ user.id }}/">⬅️</a></botton> 
+
+            </div>
+            <div class="button-wrapper submit" style="position: relative;left: 67%;top: 80%;font-size: 40px;display: inline">
+                        <input type="submit" value="✔️" style="border: none;background: none"/>
+            </div>
+
+
+</form>
+    </div>
+
+        </div>
+
+        </body>
+
+    {% else %}
+        <h1>没有登录用户</h1>
+    {% endif %}
+{% endblock %}
+</html>
+
+
+{#{% block content %}#}
+{#<h2>添加猫猫</h2>#}
+{#<ul>#}
+{#    <li>昵称: {{ user.name }} </li>#}
+{#    <li>邮箱地址: {{ user.email }} </li>#}
+{##}
+{#</ul>#}
+{#<h2>添加名下猫猫</h2>#}
+{##}
+{#<div class="form-wrapper">#}
+{#   <form method="post" action="" enctype="multipart/form-data">#}
+{#      {% csrf_token %}#}
+{#      {% for field in form %}#}
+{#           <div class="fieldWrapper">#}
+{#        {{ field.errors }}#}
+{#        {{ field.label_tag }} {{ field }}#}
 {#        {% if field.help_text %}#}
 {#             <p class="help">{{ field.help_text|safe }}</p>#}
 {#        {% endif %}#}
-           </div>
-        {% endfor %}
-      <div class="button-wrapper submit">
-         <input type="submit" value="完成" />
-      <botton><a href="/pet">返回</a></botton>
-      </div>
-   </form>
-</div>
-
-
+{#           </div>#}
+{#        {% endfor %}#}
+{#      <div class="button-wrapper submit">#}
+{#         <input type="submit" value="完成" />#}
+{#      <botton><a href="/pet">返回</a></botton>#}
+{#      </div>#}
+{#   </form>#}
+{#</div>#}
+{##}
+{##}
 {#     <a href="{% url 'users:pwd_change' user.id %}">Password change</a>#}
-
-{% endblock %}
+{##}
+{#{% endblock %}#}

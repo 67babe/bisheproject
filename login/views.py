@@ -20,6 +20,7 @@ from .forms import ProfileForm
 from .forms import RegisterForm
 from .forms import PwdForm
 from .forms import PetForm
+from .forms import DynamicForm
 from .models import PicTest
 from django.db.models import Q
 from django.urls import reverse
@@ -168,18 +169,20 @@ def hash_code(s, salt='67babe'):  # 加点盐嘻嘻
     return h.hexdigest()
 
 def search_dynamic(request):
+    userid = request.session.get('user_id')
+    user = User.objects.get(id=userid)
+    user_head = User.objects.get(id=userid)  # 专门做头像用
     q = request.GET.get('q')
     print(q)
     error_msg = ''
     if not q:
         error_msg = '请输入关键词'
-        return render(request, 'dynamic/dynamic.html', {'error_msg': error_msg})
+        return render(request, 'dynamic/dynamic.html',locals())
 
     dynamic_list = Dynamic.objects.filter(dyn_title__icontains=q)
     if dynamic_list:
         print('找到了')
-    return render(request, 'dynamic/search_dynamic_result.html', {'error_msg': error_msg,
-                                                 'dynamic_list': dynamic_list})
+    return render(request, 'dynamic/search_dynamic_result.html', locals())
 
 def dynamic(request):
     if not request.session.get('is_login', None):
@@ -202,33 +205,56 @@ def my_dynamic(request):
     data = Dynamic.objects.filter(user_id=userid) # .order_by('-pub_date')
     return render(request, 'dynamic/my_dynamic.html',locals())
 
-# def delete_dynamic(request):
-#     dynamic=Dynamic.objects.get(dynamic_id=id)
-#     if dynamic:
-#         dynamic.delete()#删除动态
-#     return HttpResponseRedirect('/my_dynamic/')
+def delete_dynamic(request,id):
+    dynamic=Dynamic.objects.filter(dynamic_id=id)
+    if dynamic:
+        dynamic.delete_Dynamic()#删除动态
+        print("删除成功")
+    return HttpResponseRedirect('/my_dynamic/')
 
-def show_upload_dynamic(request):
-    return render(request, 'dynamic/upload_dynamic.html')
+# def show_upload_dynamic(request):
+#     userid = request.session.get('user_id')
+#     user = User.objects.get(id=userid)
+#     user_head = User.objects.get(id=userid)  # 专门做头像用
+#     return render(request, 'dynamic/upload_dynamic.html',locals())
 
 
-def upload_dynamic_handle(request):
-    # 1。获取上传的图片的处理对象
-    title = request.POST.get('title')
-    pic = request.FILES['pic']
-    text = request.POST.get('text')
-    user = request.session.get('user_id')
-    # 2。创建一个文件
-    save_path = '%s/dynamic_img/%s' % (settings.MEDIA_ROOT, pic.name)
-    with open(save_path, 'wb')as f:
-        # 3。获取上传文件的内容并写到创建的文件中
-        for content in pic.chunks():
-            f.write(content)
-    # 4。在数据库中保存上传记录（路径）
-    Dynamic.objects.create(dyn_imag='dynamic_img/%s' % pic.name, dyn_text=text, dyn_title=title, user_id=user)
-    # return render(request, 'dynamic/upload_pic.html')
+def upload_dynamic(request):
+    userid = request.session.get('user_id')
+    user = User.objects.get(id=userid)
+    user_head = User.objects.get(id=userid)  # 专门做头像用
 
-    return HttpResponseRedirect('/dynamic/')
+    if request.method == "POST":
+        form = DynamicForm (request.POST, request.FILES)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            text = form.cleaned_data['text']
+            imag = request.FILES['imag']
+            new_dynamic = Dynamic.objects.create(user_id=userid)
+            new_dynamic.dyn_title=title
+            new_dynamic.dyn_text = text
+            new_dynamic.dyn_imag = imag
+            new_dynamic.save()
+            return redirect('/dynamic/')  # 自动跳转到
+    form = DynamicForm()
+    return render(request, 'dynamic/upload_dynamic.html', locals())
+
+    # # 1。获取上传的图片的处理对象
+    # title = request.POST.get('title')
+    # pic = request.FILES['pic']
+    # text = request.POST.get('text')
+    # user = request.session.get('user_id')
+    # # 2。创建一个文件
+    # save_path = '%s/dynamic_img/%s' % (settings.MEDIA_ROOT, pic.name)
+    # with open(save_path, 'wb')as f:
+    #     # 3。获取上传文件的内容并写到创建的文件中
+    #     for content in pic.chunks():
+    #         f.write(content)
+    # # 4。在数据库中保存上传记录（路径）
+    # Dynamic.objects.create(dyn_imag='dynamic_img/%s' % pic.name, dyn_text=text, dyn_title=title, user_id=user)
+    # # return render(request, 'dynamic/upload_pic.html')
+    #
+    # return HttpResponseRedirect('/dynamic/')
 
 
 
@@ -333,19 +359,24 @@ def user_setting(request):
     user_head = User.objects.get(id=userid)  # 专门做头像用
     if request.method == "POST":
         form = ProfileForm(request.POST, request.FILES)
+        message = "请检查填写的内容！"
         if form.is_valid():
             user.name = form.cleaned_data['username']
             user.email = form.cleaned_data['email']
             user.sex = form.cleaned_data['sex']
             user.profile = form.cleaned_data['profile']
             user.user_imag = request.FILES['imag']
+            if not user.user_imag:
+                message = "请选择图片！"
+                return render(request, 'home/user_setting.html', locals())
             user.save()
         return HttpResponseRedirect('/home/'+str(userid))
 
     else:
         default_data = {'username': user.name, 'email': user.email, 'sex': user.sex, 'profile': user.profile,'imag':user.user_imag}
+        print(user.user_imag)
         form = ProfileForm(default_data)
-        return render(request, 'home/user_setting.html', {'form': form, 'user': user})
+        return render(request, 'home/user_setting.html', locals())
     data = User.objects.get(id=userid)
     pets = Pet.objects.filter(user_id=userid)
     return render(request, 'home/home.html', locals())

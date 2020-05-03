@@ -1,35 +1,119 @@
-{% block content %}
-<h2>个人信息</h2>
-<ul>
-    <li>昵称: {{ user.name }} </li>
-    <li>邮箱地址: {{ user.email }} </li>
-
-</ul>
-<h2>修改密码</h2>
-
-<div class="form-wrapper">
-   <form method="post" action="" enctype="multipart/form-data">
-    {% if message %}
-        <div class="alert alert-warning">{{ message }}</div>
-    {% endif %}
-      {% csrf_token %}
-      {% for field in form %}
-           <div class="fieldWrapper">
-        {{ field.errors }}
-        {{ field.label_tag }} {{ field }}
-        {% if field.help_text %}
-             <p class="help">{{ field.help_text|safe }}</p>
-        {% endif %}
-           </div>
-        {% endfor %}
-      <div class="button-wrapper submit">
-         <input type="submit" value="提交" />
-    <botton><a href="/home/{{ user.id }}/">返回</a></botton>
-      </div>
-   </form>
-</div>
-
-
-{#     <a href="{% url 'users:pwd_change' user.id %}">Password change</a>#}
-
+{% extends 'login/base.html' %}
+{% load staticfiles %}
+{% block title %}修改密码{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+     <link rel="stylesheet" href="{% static 'css/index3.css' %}"/>
 {% endblock %}
+{% block content %}
+    {% if request.session.is_login %}
+
+        <html lang="en">
+
+        <p style="margin: 0 auto;font-size: 50px;text-align:center;margin-top: 10px">修改密码🛠️</p>
+
+{#                绝对定位个人头像#}
+        <div style="position: absolute;top: 120px;left: 1000px;box-shadow: 5px 5px 10px #999999;
+         width: 250px;height: 250px; border-radius:250px;overflow: hidden;">
+            <img src="{{ MEDIA_URL }}{{ user.user_imag }}" height="250px" width="250px">
+        </div>
+
+{#                个人标签#}
+        <div style="margin-top:50px;margin-bottom:50px;margin-left: 280px;border: solid 1px;border-color: #dbdbdb;height:450px;width:900px;box-shadow: 5px 5px 10px #999999;border-radius:10px">
+
+        <div class="form-wrapper">
+         
+        <form method="post" action="" enctype="multipart/form-data">
+                 {% csrf_token %}
+             
+              <div class="form-group" style="width: 50% ;margin-left: 23%;font-size: 25px;margin-bottom: 30px">
+                     {{ form.errors }}
+                 {% if form.help_text %}
+                            <p class="help">{{ form.help_text|safe }}</p>
+                       {% endif %}
+                    {{ form.old_password.label_tag }}
+                   {{ form.old_password}}
+
+              </div>
+
+            <div class="form-group" style="width: 50%;margin-left: 23%;font-size: 25px;margin-bottom: 30px">
+                    {{ form.errors }}
+                 {% if form.help_text %}
+                            <p class="help">{{ form.help_text|safe }}</p>
+                       {% endif %}
+                    {{ form.new_password.label_tag }}
+                   {{ form.new_password}}
+              </div>
+
+        <div class="form-group" style="width: 50%;margin-left: 23%;font-size: 25px;margin-bottom: 30px">
+                     {{ form.errors }}
+             {% if form.help_text %}
+                            <p class="help">{{ form.help_text|safe }}</p>
+                       {% endif %}
+                    {{ form.new_password2.label_tag }}
+                   {{ form.new_password2}}
+              </div>
+
+
+               
+                 
+              <div style="position: relative;left: -7%;font-size: 40px;display: inline">
+                      <botton><a href="/home/{{ user.id }}/">⬅️</a></botton> 
+
+            </div>
+            <div class="button-wrapper submit" style="position: relative;left: 60%;top: 80%;font-size: 40px;display: inline">
+                        <input type="submit" value="✔️" style="border: none;background: none"/>
+            </div>
+         {% if message %}
+                        <div class="alert alert-warning">{{ message }}</div>
+                    {% endif %}
+
+
+</form>
+    </div>
+
+        </div>
+
+        </body>
+
+    {% else %}
+        <h1>没有登录用户</h1>
+    {% endif %}
+{% endblock %}
+</html>
+
+{#{% block content %}#}
+{#<h2>个人信息</h2>#}
+{#<ul>#}
+{#    <li>昵称: {{ user.name }} </li>#}
+{#    <li>邮箱地址: {{ user.email }} </li>#}
+{##}
+{#</ul>#}
+{#<h2>修改密码</h2>#}
+{##}
+{#<div class="form-wrapper">#}
+{#   <form method="post" action="" enctype="multipart/form-data">#}
+{#    {% if message %}#}
+{#        <div class="alert alert-warning">{{ message }}</div>#}
+{#    {% endif %}#}
+{#      {% csrf_token %}#}
+{#      {% for field in form %}#}
+{#           <div class="fieldWrapper">#}
+{#        {{ field.errors }}#}
+{#        {{ field.label_tag }} {{ field }}#}
+{#        {% if field.help_text %}#}
+{#             <p class="help">{{ field.help_text|safe }}</p>#}
+{#        {% endif %}#}
+{#           </div>#}
+{#        {% endfor %}#}
+{#      <div class="button-wrapper submit">#}
+{#         <input type="submit" value="提交" />#}
+{#    <botton><a href="/home/{{ user.id }}/">返回</a></botton>#}
+{#      </div>#}
+{#   </form>#}
+{#</div>#}
+{##}
+{##}
+{#     <a href="{% url 'users:pwd_change' user.id %}">Password change</a>#}
+{##}
+{#{% endblock %}#}
