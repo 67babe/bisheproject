@@ -12,6 +12,8 @@
 
         <p style="margin: 0 auto;font-size: 50px;text-align:center;margin-top: 10px">我的猫猫🐈️</p>
         <p style="margin: 0 auto;font-size: 50px;text-align:center;margin-bottom: 40px;margin-top: 0px"></p>
+        <div> &nbsp&nbsp</div>
+        <div> &nbsp&nbsp</div>
         <div style="position: fixed; top:70%;left:85%">
             <form method="get" enctype="multipart/form-data" action="/add_pet/">
                 {% csrf_token %}
@@ -21,13 +23,14 @@
             </form>
         </div>
         {% for pets in pets %}
-            <div style="margin: 0 auto;margin-top: 20px;margin-bottom: 100px;
+            <div style="margin: 0 auto;margin-top: -20px;margin-bottom: 100px;
          border: solid 1px;border-color: #dbdbdb;height:230px;width:800px;box-shadow: 5px 5px 10px #999999;border-radius:10px">
             <div style="position: relative;top: -60px;left: -70px;">
-                <form method="get" enctype="multipart/form-data" action="">
+                <form method="get" enctype="multipart/form-data" action="/pet_profile/{{ pets.pet_id }}/">
                     {#                     点击头像查看用户页面#}
                     {% csrf_token %}
                     {#                        遮罩#}
+
                     <div style="width: 200px;height: 200px; border-radius:250px;overflow: hidden;box-shadow: 5px 5px 10px #999999">
                         <input type="image" src=" {{ MEDIA_URL }}{{ pets.pet_imag }}" height="200px" width="200px"
                                value="🐱">
@@ -43,52 +46,48 @@
                 {% else %}
                     <p style="font-size: 60px;display: inline">&nbsp;&nbsp;🚺</p>
                 {% endif %}
-            </div>
-            <div style="position:relative;left: 19%;top: -100px">
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+                {#             <a href="{% url "delete_pet" pets.pet_id%}">#}
+                {#                 <div style="font-size: 30px;position: relative;left: 73%">🗑️</div>#}
+                {#                 </a>#}
+                <a href="#" onclick="confirm_delete()">
+                    <div style="font-size: 30px;position: relative;left: 73%">🗑️</div>
+                </a>
 
             </div>
+{#            <div style="position:relative;left: 19%;top: -100px">#}
+{#                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp#}
+{#                {% comment %}{% endcomment %}#}
+{#            </div>#}
+            <script>
+                // 删除函数
+                function confirm_delete() {
+                    // 调用layer弹窗组件
+                    layer.open({
+                        // 弹窗标题
+                        title: "确认删除",
+                        // 正文
+                        content: "确认删除该猫猫吗？",
+                        // 点击确定按钮后调用的回调函数
+                        yes: function (index, layero) {
+                            // 指定应当前往的 url
+                            location.href = '{% url "delete_pet" pets.pet_id%}'
+                        },
+                    })
+                }
+            </script>
         {% endfor %}
         </div>
 
-        {#                <tr>#}
-        {#            <div>我的粉丝：</div>#}
-        {#            <br/>#}
-        {#            <table border="1">#}
-        {#                {% for data in data %}#}
-        {#                    <th>#}
-        {#                        <form method="get" enctype="multipart/form-data" action="/show_profile/{{ data.id }}/">#}
-        {#                     点击头像查看用户页面#}
-        {#                            {% csrf_token %}#}
-        {#                            <div style="width: 120px;height: 120px; border-radius:250px;overflow: hidden;">#}
-        {#                                <input type="image" src=" {{ MEDIA_URL }}{{ data.user_imag }}" height="120px"#}
-        {#                                       width="120px" value="查看用户主页">#}
-        {#                            </div>#}
-        {#                        </form>#}
-        {#                        <div>{{ data.name }}</div>#}
-        {#                        <br/>#}
-        {##}
-        {#                        <div>{{ data.profile }}</div>#}
-        {#                        <br/>#}
-        {##}
-        {##}
-        {#                        </form>#}
-        {##}
-        {#                    </th>#}
-        {##}
-        {##}
-        {#                {% endfor %}#}
-        {##}
-        {##}
-        {#            </table>#}
-        {#        </tr>#}
-
-
         </body>
+
 
     {% else %}
         <h1>没有登录用户</h1>
     {% endif %}
+
 {% endblock %}
+
+
 </html>
 </html>

@@ -19,7 +19,7 @@
         </div>
 
         {#        个人标签#}
-        <div style="margin-top:50px;margin-bottom:50px;margin-left: 280px;border: solid 1px;border-color: #dbdbdb;height:600px;width:900px;box-shadow: 5px 5px 10px #999999;border-radius:10px">
+        <div style="margin-top:50px;margin-bottom:50px;margin-left: 280px;border: solid 1px;border-color: #dbdbdb;height:430px;width:900px;box-shadow: 5px 5px 10px #999999;border-radius:10px">
             <div style="margin-left: 90%;margin-top:2% ">
                 {#                占位置#}
 {#                <form method="get" enctype="multipart/form-data" action="/user_setting/">#}
@@ -34,7 +34,7 @@
         <form method="post" action="" enctype="multipart/form-data">
                  {% csrf_token %}
 {#                 {% for field in form %}#}
-              <div class="form-group" style="width: 50% ;margin-left: 23%;font-size: 25px;margin-bottom: 30px">
+              <div class="form-group" style="width: 30% ;margin-left: 23%;font-size: 25px;margin-bottom: 30px">
             {% if form.help_text %}
                             <p class="help">{{ form.help_text|safe }}</p>
                        {% endif %}

@@ -206,7 +206,7 @@ def my_dynamic(request):
     return render(request, 'dynamic/my_dynamic.html',locals())
 
 def delete_dynamic(request,id):
-    dynamic=Dynamic.objects.filter(dynamic_id=id)
+    dynamic=Dynamic.objects.get(dynamic_id=id)
     if dynamic:
         dynamic.delete_Dynamic()#删除动态
         print("删除成功")
@@ -293,7 +293,7 @@ def show_profile(request,userid):
     pets = Pet.objects.filter(user_id=userid)
     pets2=pets.order_by('pet_id')[:2]
     dynamic = Dynamic.objects.filter(user_id=userid)
-    dynamic2 = dynamic.order_by('dynamic_id')[:5]
+    dynamic2 = dynamic.order_by('dynamic_id')[:3]
     following_number = FriendShip.objects.filter(following=userid)
     follower_number = FriendShip.objects.filter(follower=userid)
 
@@ -330,6 +330,13 @@ def pet(request):
     pets = Pet.objects.filter(user_id=userid)
     return render(request, 'Pet/pet.html', locals())
 
+def pet_profile(request,pet_id):
+    userid = request.session.get('user_id')
+    pet_id = pet_id
+    pets=Pet.objects.get(pet_id=pet_id)
+    data = User.objects.get(id=userid)
+    user_head = User.objects.get(id=userid)  # 专门做头像用
+    return render(request, 'Pet/pet_profile.html', locals())
 
 def add_pet(request):
     userid = request.session.get('user_id')
@@ -352,6 +359,11 @@ def add_pet(request):
     form = PetForm()
     return render(request, 'pet/add_pet.html', locals())
 
+def delete_pet(request,id):
+    pet=Pet.objects.get(pet_id=id)
+    pet.delete()
+    print('调用删除啦')
+    return redirect('/pet/')
 
 def user_setting(request):
     userid = request.session.get('user_id')

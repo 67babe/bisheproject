@@ -1,0 +1,57 @@
+{% extends 'login/base.html' %}
+{% block title %}宠物详情{% endblock %}
+{% block content %}
+    {% if request.session.is_login %}
+
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>宠物详情</title>
+        </head>
+        <body>
+
+        <p style="margin: 0 auto;font-size: 50px;text-align:center;margin-top: 10px">宠物详情️</p>
+        <p style="margin: 0 auto;font-size: 50px;text-align:center;margin-bottom: 40px;margin-top: 0px"></p>
+        <div style="position: fixed; top:70%;left:85%">
+
+        </div>
+
+                    {% csrf_token %}
+                    {#                        遮罩#}
+                    <div style="width: 200px;height: 200px; border-radius:250px;overflow: hidden;box-shadow: 5px 5px 10px #999999">
+                        <input type="image" src=" {{ MEDIA_URL }}{{ pets.pet_imag }}" height="200px" width="200px"
+                               value="🐱">
+                    </div>
+                </form>
+            </div>
+            <div style="position:relative;left: 20%;top: -160px">
+                <p style="font-size: 80px;display: inline">{{ pets.pet_name }}</p>
+                <p style="font-size: 90px;color: #5e5e5e;display: inline">&nbsp&nbsp{{ pets.pet_age }}</p>
+                <p style="font-size: 80px;color: #5e5e5e;display: inline">岁</p>
+                {% if pets.pet_sex == '男孩' %}
+                    <p style="font-size: 60px;display: inline"> &nbsp;&nbsp;🚹</p>
+                {% else %}
+                    <p style="font-size: 60px;display: inline">&nbsp;&nbsp;🚺</p>
+                {% endif %}
+            <a href="{% url "delete_pet" pets.pet_id%}">删除宠物</a>
+            </div>
+            <div style="position:relative;left: 19%;top: -100px">
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+            </div>
+
+        </div>
+
+
+
+        </body>
+
+    {% else %}
+        <h1>没有登录用户</h1>
+    {% endif %}
+
+
+
+{% endblock %}
+</html>
+</html>
