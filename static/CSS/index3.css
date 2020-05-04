@@ -662,21 +662,22 @@ rgba(146,143,147,0.42);
 
 /*}*/
 
-#showtime{
-	/*position:absolute;*/
-	/*left: 1115px;*/
-	top: -10px;
-	float:left;
-	width: 300px;
-	height: 30px;
-	text-align: right;
-	/*为快元素设置内容*/
-	font-size: 16px;
-	line-height: 30px;
-	color: #6b6b6b;
+/*#showtime{*/
+/*	!*position:absolute;*!*/
+/*	!*left: 1115px;*!*/
+/*	top: -10px;*/
+/*	float:left;*/
+/*	width: 300px;*/
+/*	height: 30px;*/
+/*	text-align: right;*/
+/*	!*为快元素设置内容*!*/
+/*	font-size: 16px;*/
+/*	line-height: 30px;*/
+/*	color: #6b6b6b;*/
 
-	margin: 0px auto;
-	/*设置上右下左外边距*/
-	padding: 10px;
-	/*设置上右下做内边距*/
-}
+/*	margin: 0px auto;*/
+/*	!*设置上右下左外边距*!*/
+/*	padding: 10px;*/
+/*	!*设置上右下做内边距*!*/
+/*}*/
+a{text-decoration:none}

@@ -195,6 +195,13 @@ def dynamic(request):
     comment=Discuss.objects.all()
     return render(request, 'dynamic/dynamic.html',locals())
 
+def dynamic_detail(request,id):
+    userid = request.session.get('user_id')
+    user = User.objects.get(id=userid)
+    user_head = User.objects.get(id=userid)  # 专门做头像用
+    data= Dynamic.objects.get(dynamic_id=id)
+    return render(request, 'dynamic/dynamic_detail.html', locals())
+
 def my_dynamic(request):
     if not request.session.get('is_login', None):
         # 如果本来就未登录，也就没有登出一说

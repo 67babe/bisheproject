@@ -4,11 +4,11 @@
 {% block content %}
     {% if request.session.is_login %}
 
-{#        发布动态、欢迎回来、动态搜索#}
-        <div style="position: fixed; top:85%;left:94%" >
+        {#        发布动态、欢迎回来、动态搜索#}
+        <div style="position: fixed; top:85%;left:94%">
             <form method="get" enctype="multipart/form-data" action="/upload_dynamic/">
                 {% csrf_token %}
-                <input  type="submit" value="📝"  style="font-size: 50px ;border: 0px;background: none "class="ok">
+                <input type="submit" value="📝" style="font-size: 50px ;border: 0px;background: none " class="ok">
             </form>
         </div>
         <div style="display: flex; justify-content: space-between">
@@ -16,9 +16,9 @@
                 欢迎回来！👏
             </div>
             <form role="search" method="get" id="searchform" action="/search_dynamic/">
-              {% csrf_token %}
-              <input type="search" name="q" placeholder="搜索动态" required>
-              <button type="submit">🔍<span class="ion-ios-search-strong"></span></button>
+                {% csrf_token %}
+                <input type="search" name="q" placeholder="搜索动态" required>
+                <button type="submit">🔍<span class="ion-ios-search-strong"></span></button>
             </form>
         </div>
 
@@ -37,109 +37,123 @@
                                        width="30px"
                                        style="border-radius: 50%;" value="查看用户个人主页">
                                 <div style="margin-left: 4px">{{ data.user }}</div>
+                                {#                                <a href="/dynamic_detail/{{data.dynamic_id}}/">查看动态详情</a>#}
 
                             </div>
                         </form>
                     </div>
 
 
-                    <div style="margin-bottom: 4px">   <!-- 给图片加 data-toggle="modal"，data-target="#exampleModal"设置为【按钮】触发模态框 -->
+                    <div style="margin-bottom: 4px">
+                        <!-- 给图片加 data-toggle="modal"，data-target="#exampleModal"设置为【按钮】触发模态框 -->
 
-                        {% for comment in comment reversed %}
-                            {% if comment.dynamic_id == data.dynamic_id %}
-                        <img src="{{ MEDIA_URL }}{{ data.dyn_imag }}" height="250px" width="250px" data-toggle="modal"
-                             data-target="#exampleModal"
-                             onclick="Values('{{ data.user }}','{{ data.dyn_title }}','{{ data.dyn_text }}','{{ data.dyn_time }}'
-                                     ,'{{ MEDIA_URL }}{{ data.dyn_imag }}','{{ MEDIA_URL }}{{ data.user.user_imag }}',
-                                     '　👤{{comment.user}}：  {{comment.dis_text}}：         🕘{{ comment.dis_time }}')">
+                        {#                        {% for comment in comment reversed %}#}
+                        {#                            {% if comment.dynamic_id == data.dynamic_id %}#}
+                        {#                        <img src="{{ MEDIA_URL }}{{ data.dyn_imag }}" height="250px" width="250px" data-toggle="modal"#}
+                        {#                             data-target="#exampleModal"#}
+                        {#                             onclick="Values('{{ data.user }}','{{ data.dyn_title }}','{{ data.dyn_text }}','{{ data.dyn_time }}'#}
+                        {#                                     ,'{{ MEDIA_URL }}{{ data.dyn_imag }}','{{ MEDIA_URL }}{{ data.user.user_imag }}',#}
+                        {#                                     '　👤{{comment.user}}：  {{comment.dis_text}}：         🕘{{ comment.dis_time }}')">#}
 
-                             {% else %}
+                        {#                             {% else %}#}
 
-                        <img src="{{ MEDIA_URL }}{{ data.dyn_imag }}" height="250px" width="250px" data-toggle="modal"
-                             data-target="#exampleModal"
-                             onclick="Values('{{ data.user }}','{{ data.dyn_title }}','{{ data.dyn_text }}','{{ data.dyn_time }}'
-                                     ,'{{ MEDIA_URL }}{{ data.dyn_imag }}','{{ MEDIA_URL }}{{ data.user.user_imag }}',
-                                     '')">
+                        <form method="get" enctype="multipart/form-data" action="/dynamic_detail/{{ data.dynamic_id }}/">
+                            {#点击头像查看用户页面#}
+                            {% csrf_token %}
+                            <div style="display: flex;align-items: center;">
 
-                             {% endif %}
-                        {% endfor %}
+                              <input type="image" src="{{ MEDIA_URL }}{{ data.dyn_imag }}" height="250px" width="250px" data-toggle="modal"
+                                value="查看动态详情">
+
+                            </div>
+                        </form>
+
+
+{#                        <img src="{{ MEDIA_URL }}{{ data.dyn_imag }}" height="250px" width="250px" data-toggle="modal"#}
+{#                             data-target="#exampleModal" onclick="Values('{{ data.user }}','{{ data.dyn_title }}','{{ data.dyn_text }}','{{ data.dyn_time }}'#}
+{#                                                             ,'{{ MEDIA_URL }}{{ data.dyn_imag }}','{{ MEDIA_URL }}{{ data.user.user_imag }}',#}
+{#                                                             '')">#}
+
+
+                        {#                             {% endif %}#}
+                        {#                        {% endfor %}#}
 
 
                         {# ❤️模态框（弹出来的东西） #}
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalLabel">
-                            <div class="modal-dialog" role="document" style="width: 80%">
-                                <div class="modal-content">
-{#                                    ❤️模态头#}
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close"><span
-                                                aria-hidden="true">×</span></button>
-                                        <h4 class="modal-title" id="exampleModalLabel">动态详情</h4>
-                                    </div>
-{#                                    ❤️模态身体#}
-                                    <div class="modal-body">
-{#                                        该用户头像、名称#}
-                                        <div style="display: flex; justify-content: space-between;align-items: center;margin: 20px; ">
-                                            <div style="display: flex; align-items: center">
-                                                <img src="" height="60px"
-                                                     width="60px"
-                                                     style="border-radius: 50%;" id="a_userimg">
-                                                <div style="margin-left: 4px; font-size: 24px" id="a_username">用户名</div>
-                                                <div style="margin-left: 4px; font-size: 24px"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户评论：</div>
-                                            </div>
-                                        </div>
-{#                                       ❤️ 其他部分#}
-                                        <div style="display: flex;">
-{#                                        ❤️标题、内容、时间#}
-                                            <div style="margin-left: 20px">
-                                                <img src="" height="400px"
-                                                     width="400px" id="a_img"
-                                                     style="margin-bottom: 20px">
-                                                <div style="word-break: break-all;word-wrap: break-word;font-size: 16px;font-weight: bold;margin-bottom:4px"
-                                                     id="a_title">动态标题
-                                                </div>
-                                                <div style="word-break: break-all;word-wrap: break-word;font-size: 14px;margin-bottom: 4px"
-                                                     id="a_content">动态内容
-                                                </div>
-                                                <div style="font-size: 12px;color: #9d9d9d" id="a_time">动态发表时间</div>
-                                            </div>
-
-{#                                        ⚠️⚠️⚠️用户评论展示、发表评论部分#}
-                                            <div style="flex: 1; margin-left: 50px;display: flex;flex-direction: column;justify-content: space-between">
-                                                 <div style="word-break: break-all;word-wrap: break-word;font-size: 16px;font-weight: bold;margin-bottom:4px"
-                                                     id="a_discuss_username">
-                                                </div>
-{#                                                暴力达标 后续改#}
-                                                <div id="div1" style="display:none;position:relative;top:-30%;left: 0%;font-size: 20px"> 👤刘祺：好可爱呀！！！ 🕘 2020年5月3日 <div id="showtime"></div> </div>
-{#                                                <div style="margin-bottom: 8px;"><span#}
-{#                                                        style="font-size: 18px;font-weight: bold;color: #2e6da4">用户1号: </span>好可爱呀#}
-{#                                                </div>#}
-                                                <div>
-                                                    <form>
-                                            <textarea type="text" placeholder="输入评论..."
-                                                      style="width: 100%;height: 100px;font-size: 24px;padding-left: 24px;padding-top: 16px;border: 0;outline: none;resize: none; "></textarea>
-                                                    </form>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-{#                                    模态脚#}
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">返回
-                                        </button>
-
-                                             <button type="button" class="btn btn-primary" onclick="isHidden('div1')">发表评论</button>
-
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
+                        {#                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"#}
+                        {#                             aria-labelledby="exampleModalLabel">#}
+                        {#                            <div class="modal-dialog" role="document" style="width: 80%">#}
+                        {#                                <div class="modal-content">#}
+                        {#                                    ❤️模态头#}
+                        {#                                    <div class="modal-header">#}
+                        {#                                        <button type="button" class="close" data-dismiss="modal"#}
+                        {#                                                aria-label="Close"><span#}
+                        {#                                                aria-hidden="true">×</span></button>#}
+                        {#                                        <h4 class="modal-title" id="exampleModalLabel">动态详情</h4>#}
+                        {#                                    </div>#}
+                        {#                                    ❤️模态身体#}
+                        {#                                    <div class="modal-body">#}
+                        {#                                        该用户头像、名称#}
+                        {#                                        <div style="display: flex; justify-content: space-between;align-items: center;margin: 20px; ">#}
+                        {#                                            <div style="display: flex; align-items: center">#}
+                        {#                                                <img src="" height="60px"#}
+                        {#                                                     width="60px"#}
+                        {#                                                     style="border-radius: 50%;" id="a_userimg">#}
+                        {#                                                <div style="margin-left: 4px; font-size: 24px" id="a_username">用户名</div>#}
+                        {#                                                <div style="margin-left: 4px; font-size: 24px"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#}
+                        {#                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户评论：</div>#}
+                        {#                                            </div>#}
+                        {#                                        </div>#}
+                        {#                                       ❤️ 其他部分#}
+                        {#                                        <div style="display: flex;">#}
+                        {#                                        ❤️标题、内容、时间#}
+                        {#                                            <div style="margin-left: 20px">#}
+                        {#                                                <img src="" height="400px"#}
+                        {#                                                     width="400px" id="a_img"#}
+                        {#                                                     style="margin-bottom: 20px">#}
+                        {#                                                <div style="word-break: break-all;word-wrap: break-word;font-size: 16px;font-weight: bold;margin-bottom:4px"#}
+                        {#                                                     id="a_title">动态标题#}
+                        {#                                                </div>#}
+                        {#                                                <div style="word-break: break-all;word-wrap: break-word;font-size: 14px;margin-bottom: 4px"#}
+                        {#                                                     id="a_content">动态内容#}
+                        {#                                                </div>#}
+                        {#                                                <div style="font-size: 12px;color: #9d9d9d" id="a_time">动态发表时间</div>#}
+                        {#                                            </div>#}
+                        {##}
+                        {#                                        ⚠️⚠️⚠️用户评论展示、发表评论部分#}
+                        {#                                            <div style="flex: 1; margin-left: 50px;display: flex;flex-direction: column;justify-content: space-between">#}
+                        {#                                                 <div style="word-break: break-all;word-wrap: break-word;font-size: 16px;font-weight: bold;margin-bottom:4px"#}
+                        {#                                                     id="a_discuss_username">#}
+                        {#                                                </div>#}
+                        {#                                                暴力达标 后续改#}
+                        {#                                                <div id="div1" style="display:none;position:relative;top:-30%;left: 0%;font-size: 20px"> 👤刘祺：好可爱呀！！！ 🕘 2020年5月3日 <div id="showtime"></div> </div>#}
+                        {#                                                <div style="margin-bottom: 8px;"><span#}
+                        {#                                                        style="font-size: 18px;font-weight: bold;color: #2e6da4">用户1号: </span>好可爱呀#}
+                        {#                                                </div>#}
+                        {#                                                <div>#}
+                        {#                                                    <form>#}
+                        {#                                            <textarea type="text" placeholder="输入评论..."#}
+                        {#                                                      style="width: 100%;height: 100px;font-size: 24px;padding-left: 24px;padding-top: 16px;border: 0;outline: none;resize: none; "></textarea>#}
+                        {#                                                    </form>#}
+                        {#                                                </div>#}
+                        {#                                            </div>#}
+                        {##}
+                        {#                                        </div>#}
+                        {#                                    </div>#}
+                        {#                                    模态脚#}
+                        {#                                    <div class="modal-footer">#}
+                        {#                                        <button type="button" class="btn btn-default" data-dismiss="modal">返回#}
+                        {#                                        </button>#}
+                        {##}
+                        {#                                             <button type="button" class="btn btn-primary" onclick="isHidden('div1')">发表评论</button>#}
+                        {##}
+                        {##}
+                        {##}
+                        {#                                    </div>#}
+                        {##}
+                        {#                                </div>#}
+                        {#                            </div>#}
+                        {#                        </div>#}
 
                     </div>
 
@@ -161,7 +175,7 @@
                         <div style="font-size: 12px;color: #9d9d9d">{{ data.dyn_time }}</div>
                     </div>
                 </div>
-                     {% endfor %}
+            {% endfor %}
 
         </div>
 
@@ -171,36 +185,36 @@
 
     <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-     <script>
-     function isHidden(oDiv) {
-        var vDiv =document.getElementById(oDiv);
-        vDiv.style.display=(vDiv.style.display=='none')?'block':none;
-     }
-     </script>
     <script>
-        {#另一种传值方式#}
-        {#$('#exampleModal').on('show.bs.modal', function (event) {#}
-        {#    var button = $(event.relatedTarget) // 触发事件的按钮#}
-        {#    var recipient = button.data('whatever') // 解析出data-whatever内容#}
-        {#    var modal = $(this)#}
-        {#    modal.find('.modal-title').text(recipient)#}
-        {#    modal.find('#username').text(recipient)#}
-
-        $('#exampleModal').modal("hide");
-{#手动隐藏模态框。在模态框隐藏之前返回到主调函数中 （也就是，在触发 hidden.bs.modal 事件之前）。#}
-{#      ❤️  找到id为a_username的div，将username赋值给他#}
-        function Values(username, title, content, time, img, userimg,discuss_username) {
-            $('#a_username').text(username);
-            $('#a_title').text(title);
-            $('#a_content').text(content);
-            $('#a_time').text(time);
-            {#$('#a_time').#}
-            $("#a_img").attr('src', img);
-            $("#a_userimg").attr('src', userimg);
-            $("#a_discuss_username").text(discuss_username);
+        function isHidden(oDiv) {
+            var vDiv = document.getElementById(oDiv);
+            vDiv.style.display = (vDiv.style.display == 'none') ? 'block' : none;
         }
-
     </script>
+    {#    <script>#}
+    {#另一种传值方式#}
+    {#$('#exampleModal').on('show.bs.modal', function (event) {#}
+    {#    var button = $(event.relatedTarget) // 触发事件的按钮#}
+    {#    var recipient = button.data('whatever') // 解析出data-whatever内容#}
+    {#    var modal = $(this)#}
+    {#    modal.find('.modal-title').text(recipient)#}
+    {#    modal.find('#username').text(recipient)#}
+    {##}
+    {#        $('#exampleModal').modal("hide");#}
+    {#手动隐藏模态框。在模态框隐藏之前返回到主调函数中 （也就是，在触发 hidden.bs.modal 事件之前）。#}
+    {#      ❤️  找到id为a_username的div，将username赋值给他#}
+    {#        function Values(username, title, content, time, img, userimg,discuss_username) {#}
+    {#            $('#a_username').text(username);#}
+    {#            $('#a_title').text(title);#}
+    {#            $('#a_content').text(content);#}
+    {#            $('#a_time').text(time);#}
+    {#$('#a_time').#}
+    {#            $("#a_img").attr('src', img);#}
+    {#            $("#a_userimg").attr('src', userimg);#}
+    {#            $("#a_discuss_username").text(discuss_username);#}
+    {#        }#}
+    {##}
+    {#    </script>#}
 
 {% endblock %}
 

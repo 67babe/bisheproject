@@ -42,32 +42,6 @@ class User(models.Model):
             user_list.append(following_user.follower)
         return user_list
 
-    # def set_following(self,id):
-    #     '''
-    #     follow some user use id
-    #     :param id:
-    #     :return:
-    #     '''
-    #     try:
-    #         user = User.objects.get(id=id)
-    #     except Exception:
-    #         return None
-    #     # 这是关注的逻辑
-    #     friendship = FriendShip()
-    #     friendship.follower = self
-    #     friendship.following = user
-    #     friendship.save()
-    #     return True
-    #
-    # def delete_following(self,id):
-    #     try:
-    #         user = User.objects.get(id=id)
-    #     except Exception:
-    #         return None
-    #         # 这是关注的逻辑
-    #     friendship = FriendShip.objects.filter(follower=self,following=user).all()
-    #     if friendship:
-    #         friendship.delete()#取消关注
 
 
 
@@ -114,11 +88,10 @@ class Pet(models.Model):
 
 
 class Discuss(models.Model):
-    dynamic = models.ForeignKey(Dynamic, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
+    dynamic = models.ForeignKey(Dynamic, on_delete=models.CASCADE,related_name='discuss')
+    user = models.ForeignKey(User, on_delete=models.CASCADE,default=1,related_name='discuss')
     discuss_id = models.AutoField(primary_key=True)
     dis_text= models.CharField(max_length=1000,default=' ')
-    dis_like = models.IntegerField(blank=False, null=False,default=0)
     dis_time = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
