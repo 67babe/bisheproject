@@ -4,6 +4,7 @@ from django.db import models
 # login/models.py
 
 from django.db import models
+from django.urls import reverse
 
 class User(models.Model):
     gender = (
@@ -15,7 +16,7 @@ class User(models.Model):
     password = models.CharField(max_length=256)
     email = models.EmailField(unique=True)
     user_imag=models.ImageField(verbose_name='用户头像', upload_to='user_img/', default="user_img/默认头像.jpg",null=True, blank=True)
-    profile=models.CharField(max_length=1000,null=True, blank=True)
+    profile=models.CharField(max_length=1000,null=True, blank=True,default="这个铲屎官很神秘，什么也没留下...")
     sex= models.CharField(max_length=32,choices=gender,default='男')
 
 
@@ -69,6 +70,9 @@ class Dynamic(models.Model):
             print("删除成功")
         else:
             print("找不到，没有删除成功")
+
+    def get_absolute_url(self):
+        return reverse('dynamic_detail', args=[self.dynamic_id])
 
 class Pet(models.Model):
 

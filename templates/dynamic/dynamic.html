@@ -5,10 +5,10 @@
     {% if request.session.is_login %}
 
         {#        发布动态、欢迎回来、动态搜索#}
-        <div style="position: fixed; top:85%;left:94%">
+        <div style="position: fixed; top:85%;left:93%">
             <form method="get" enctype="multipart/form-data" action="/upload_dynamic/">
                 {% csrf_token %}
-                <input type="submit" value="📝" style="font-size: 50px ;border: 0px;background: none " class="ok">
+                <input type="submit" value="📝" style="font-size: 80px ;border: 0px;background: none " class="ok">
             </form>
         </div>
         <div style="display: flex; justify-content: space-between">
@@ -26,7 +26,7 @@
         <div style="display: flex; flex-wrap: wrap; ">
             {% for data in data reversed %}
 
-                <div style="margin-left: 15px;margin-bottom:30px;display: flex;flex-direction: column; width:250px">
+                <div style="margin-left: 30px;margin-bottom:30px;display: flex;flex-direction: column; width:250px">
                     <div style="display: flex; flex-wrap: wrap;align-items: center;justify-content: space-between;margin-bottom: 4px">
 
                         <form method="get" enctype="multipart/form-data" action="/show_profile/{{ data.user_id }}/">
@@ -44,18 +44,18 @@
                     </div>
 
 
-                    <div style="margin-bottom: 4px">
-                        <!-- 给图片加 data-toggle="modal"，data-target="#exampleModal"设置为【按钮】触发模态框 -->
+                    <div style="margin-bottom: 4px;">
+                            <!-- 给图片加 data-toggle="modal"，data-target="#exampleModal"设置为【按钮】触发模态框 -->
 
-                        {#                        {% for comment in comment reversed %}#}
-                        {#                            {% if comment.dynamic_id == data.dynamic_id %}#}
-                        {#                        <img src="{{ MEDIA_URL }}{{ data.dyn_imag }}" height="250px" width="250px" data-toggle="modal"#}
-                        {#                             data-target="#exampleModal"#}
-                        {#                             onclick="Values('{{ data.user }}','{{ data.dyn_title }}','{{ data.dyn_text }}','{{ data.dyn_time }}'#}
-                        {#                                     ,'{{ MEDIA_URL }}{{ data.dyn_imag }}','{{ MEDIA_URL }}{{ data.user.user_imag }}',#}
-                        {#                                     '　👤{{comment.user}}：  {{comment.dis_text}}：         🕘{{ comment.dis_time }}')">#}
+                            {#                        {% for comment in comment reversed %}#}
+                            {#                            {% if comment.dynamic_id == data.dynamic_id %}#}
+                            {#                        <img src="{{ MEDIA_URL }}{{ data.dyn_imag }}" height="250px" width="250px" data-toggle="modal"#}
+                            {#                             data-target="#exampleModal"#}
+                            {#                             onclick="Values('{{ data.user }}','{{ data.dyn_title }}','{{ data.dyn_text }}','{{ data.dyn_time }}'#}
+                            {#                                     ,'{{ MEDIA_URL }}{{ data.dyn_imag }}','{{ MEDIA_URL }}{{ data.user.user_imag }}',#}
+                            {#                                     '　👤{{comment.user}}：  {{comment.dis_text}}：         🕘{{ comment.dis_time }}')">#}
 
-                        {#                             {% else %}#}
+                            {#                             {% else %}#}
 
                         <form method="get" enctype="multipart/form-data" action="/dynamic_detail/{{ data.dynamic_id }}/">
                             {#点击头像查看用户页面#}
@@ -63,6 +63,7 @@
                             <div style="display: flex;align-items: center;">
 
                               <input type="image" src="{{ MEDIA_URL }}{{ data.dyn_imag }}" height="250px" width="250px" data-toggle="modal"
+                                     style="border-radius: 5px;box-shadow: 5px 5px 10px #999999;"
                                 value="查看动态详情">
 
                             </div>
@@ -161,15 +162,15 @@
                     <div>{#外动态下图片下的标题、文本、点赞、时间#}
                         <div style="display:flex;justify-content: space-between">
                             <div style="word-break: break-all;word-wrap: break-word;font-size: 16px;font-weight: bold">{{ data.dyn_title }}</div>
-                            {% if data.dyn_like > 0 %}
-                                <div style="font-size: 20px;"><img
-                                        src="../static/media/others_img/lv1.png">️
-                                    <span style="font-size: 16px;color:darkgray;">{{ data.dyn_like }}</span></div>
-                            {% else %}
-                                <div style="font-size: 20px;">️<img src="../static/media/others_img/lv3.png">
-                                    <span style="font-size: 16px;color:darkgray;">{{ data.dyn_like }}</span>
-                                </div>
-                            {% endif %}
+{#                            {% if data.dyn_like > 0 %}#}
+{#                                <div style="font-size: 20px;"><img#}
+{#                                        src="../static/media/others_img/lv1.png">️#}
+{#                                    <span style="font-size: 16px;color:darkgray;">{{ data.dyn_like }}</span></div>#}
+{#                            {% else %}#}
+{#                                <div style="font-size: 20px;">️<img src="../static/media/others_img/lv3.png">#}
+{#                                    <span style="font-size: 16px;color:darkgray;">{{ data.dyn_like }}</span>#}
+{#                                </div>#}
+{#                            {% endif %}#}
                         </div>
                         <div style="word-break: break-all;word-wrap: break-word;font-size: 14px;">{{ data.dyn_text }}</div>
                         <div style="font-size: 12px;color: #9d9d9d">{{ data.dyn_time }}</div>

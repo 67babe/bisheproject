@@ -12,7 +12,7 @@ function showDate() {
     var xMinute = keepDouble(xDate.getMinutes());
     var xSecond = keepDouble(xDate.getSeconds());
     var string = "";
-    string = "🕙"+xYear+"/"+xMonth+"/"+xDay+"&nbsp;&nbsp;"+xHour+":"+xMinute+":"+xSecond+"";
+    string = "📅"+xYear+"/"+xMonth+"/"+xDay+"&nbsp;&nbsp;"+"🕘"+xHour+":"+xMinute+":"+xSecond+"";
     document.getElementById("showtime").innerHTML = string;
 }
 // window.onload=function(){

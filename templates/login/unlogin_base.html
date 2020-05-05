@@ -10,17 +10,268 @@
     <title>{% block title %}base{% endblock %}</title>
 
     <!-- Bootstrap -->
-    <link href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+     <link rel="stylesheet" href="{% static 'css/normalize.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+     <link href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+
     <![endif]-->
     {% block css %}{% endblock %}
   </head>
   <body>
+{#  猫猫挂#}
+  <div class="all-wrap" style="position: absolute;top: 10%;left: 80%">
+  <div class="all">
+    <div class="yarn"></div>
+    <div class="cat-wrap">
+      <div class="cat">
+        <div class="cat-upper">
+          <div class="cat-leg"></div>
+          <div class="cat-leg"></div>
+          <div class="cat-head">
+            <div class="cat-ears">
+              <div class="cat-ear"></div>
+              <div class="cat-ear"></div>
+            </div>
+            <div class="cat-face">
+              <div class="cat-eyes"></div>
+              <div class="cat-mouth"></div>
+              <div class="cat-whiskers"></div>
+            </div>
+          </div>
+        </div>
+        <div class="cat-lower-wrap">
+          <div class="cat-lower">
+            <div class="cat-leg">
+              <div class="cat-leg">
+                <div class="cat-leg">
+                  <div class="cat-leg">
+                    <div class="cat-leg">
+                      <div class="cat-leg">
+                        <div class="cat-leg">
+                          <div class="cat-leg">
+                            <div class="cat-leg">
+                              <div class="cat-leg">
+                                <div class="cat-leg">
+                                  <div class="cat-leg">
+                                    <div class="cat-leg">
+                                      <div class="cat-leg">
+                                        <div class="cat-leg">
+                                          <div class="cat-leg">
+                                            <div class="cat-paw"></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cat-leg">
+              <div class="cat-leg">
+                <div class="cat-leg">
+                  <div class="cat-leg">
+                    <div class="cat-leg">
+                      <div class="cat-leg">
+                        <div class="cat-leg">
+                          <div class="cat-leg">
+                            <div class="cat-leg">
+                              <div class="cat-leg">
+                                <div class="cat-leg">
+                                  <div class="cat-leg">
+                                    <div class="cat-leg">
+                                      <div class="cat-leg">
+                                        <div class="cat-leg">
+                                          <div class="cat-leg">
+                                            <div class="cat-paw"></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cat-tail">
+              <div class="cat-tail">
+                <div class="cat-tail">
+                  <div class="cat-tail">
+                    <div class="cat-tail">
+                      <div class="cat-tail">
+                        <div class="cat-tail">
+                          <div class="cat-tail">
+                            <div class="cat-tail">
+                              <div class="cat-tail">
+                                <div class="cat-tail">
+                                  <div class="cat-tail">
+                                    <div class="cat-tail">
+                                      <div class="cat-tail">
+                                        <div class="cat-tail">
+                                          <div class="cat-tail -end"></div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="all-wrap" style="position: absolute;top: 10%;left: 20%">
+  <div class="all">
+    <div class="yarn"></div>
+    <div class="cat-wrap">
+      <div class="cat">
+        <div class="cat-upper">
+          <div class="cat-leg"></div>
+          <div class="cat-leg"></div>
+          <div class="cat-head">
+            <div class="cat-ears">
+              <div class="cat-ear"></div>
+              <div class="cat-ear"></div>
+            </div>
+            <div class="cat-face">
+              <div class="cat-eyes"></div>
+              <div class="cat-mouth"></div>
+              <div class="cat-whiskers"></div>
+            </div>
+          </div>
+        </div>
+        <div class="cat-lower-wrap">
+          <div class="cat-lower">
+            <div class="cat-leg">
+              <div class="cat-leg">
+                <div class="cat-leg">
+                  <div class="cat-leg">
+                    <div class="cat-leg">
+                      <div class="cat-leg">
+                        <div class="cat-leg">
+                          <div class="cat-leg">
+                            <div class="cat-leg">
+                              <div class="cat-leg">
+                                <div class="cat-leg">
+                                  <div class="cat-leg">
+                                    <div class="cat-leg">
+                                      <div class="cat-leg">
+                                        <div class="cat-leg">
+                                          <div class="cat-leg">
+                                            <div class="cat-paw"></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cat-leg">
+              <div class="cat-leg">
+                <div class="cat-leg">
+                  <div class="cat-leg">
+                    <div class="cat-leg">
+                      <div class="cat-leg">
+                        <div class="cat-leg">
+                          <div class="cat-leg">
+                            <div class="cat-leg">
+                              <div class="cat-leg">
+                                <div class="cat-leg">
+                                  <div class="cat-leg">
+                                    <div class="cat-leg">
+                                      <div class="cat-leg">
+                                        <div class="cat-leg">
+                                          <div class="cat-leg">
+                                            <div class="cat-paw"></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cat-tail">
+              <div class="cat-tail">
+                <div class="cat-tail">
+                  <div class="cat-tail">
+                    <div class="cat-tail">
+                      <div class="cat-tail">
+                        <div class="cat-tail">
+                          <div class="cat-tail">
+                            <div class="cat-tail">
+                              <div class="cat-tail">
+                                <div class="cat-tail">
+                                  <div class="cat-tail">
+                                    <div class="cat-tail">
+                                      <div class="cat-tail">
+                                        <div class="cat-tail">
+                                          <div class="cat-tail -end"></div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -31,7 +282,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">🐱</a>
+          <a class="navbar-brand" href="/index/">🐱</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -64,6 +315,9 @@
     <script src="{% static 'js/jquery-3.2.1.js' %}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+      <script src="{% static 'js/Rx.min.js'%}"></script>
+     <script src="{% static 'js/rxcss.min.js'%}"></script>
+     <script src="{% static 'js/hammer.min.js'%}"></script>
   </body>
 </html>
 {#通过页面顶端的{% load staticfiles %}加载后，才可以使用static方法；#}

@@ -21,6 +21,7 @@ from .forms import RegisterForm
 from .forms import PwdForm
 from .forms import PetForm
 from .forms import DynamicForm
+from comment.models import Comment
 from .models import PicTest
 from django.db.models import Q
 from django.urls import reverse
@@ -192,7 +193,7 @@ def dynamic(request):
     user = User.objects.get(id=userid)
     user_head = User.objects.get(id=userid)  # 专门做头像用
     data = Dynamic.objects.all() # .order_by('-pub_date')
-    comment=Discuss.objects.all()
+    # comment=Comment.objects.filter(dynamic_id=)
     return render(request, 'dynamic/dynamic.html',locals())
 
 def dynamic_detail(request,id):
@@ -200,6 +201,10 @@ def dynamic_detail(request,id):
     user = User.objects.get(id=userid)
     user_head = User.objects.get(id=userid)  # 专门做头像用
     data= Dynamic.objects.get(dynamic_id=id)
+    comments = Comment.objects.filter(dynamic_id=id)
+    # 添加comments上下文
+    context = {'dynamic': dynamic, 'comments': comments}
+
     return render(request, 'dynamic/dynamic_detail.html', locals())
 
 def my_dynamic(request):
@@ -217,7 +222,7 @@ def delete_dynamic(request,id):
     if dynamic:
         dynamic.delete_Dynamic()#删除动态
         print("删除成功")
-    return HttpResponseRedirect('/my_dynamic/')
+    return HttpResponseRedirect('/dynamic/')
 
 # def show_upload_dynamic(request):
 #     userid = request.session.get('user_id')
@@ -337,13 +342,13 @@ def pet(request):
     pets = Pet.objects.filter(user_id=userid)
     return render(request, 'Pet/pet.html', locals())
 
-def pet_profile(request,pet_id):
-    userid = request.session.get('user_id')
-    pet_id = pet_id
-    pets=Pet.objects.get(pet_id=pet_id)
-    data = User.objects.get(id=userid)
-    user_head = User.objects.get(id=userid)  # 专门做头像用
-    return render(request, 'Pet/pet_profile.html', locals())
+# def pet_profile(request,pet_id):
+#     userid = request.session.get('user_id')
+#     pet_id = pet_id
+#     pets=Pet.objects.get(pet_id=pet_id)
+#     data = User.objects.get(id=userid)
+#     user_head = User.objects.get(id=userid)  # 专门做头像用
+#     return render(request, 'Pet/pet_profile.html', locals())
 
 def add_pet(request):
     userid = request.session.get('user_id')
@@ -370,6 +375,7 @@ def delete_pet(request,id):
     pet=Pet.objects.get(pet_id=id)
     pet.delete()
     print('调用删除啦')
+    print(id)
     return redirect('/pet/')
 
 def user_setting(request):
