@@ -58,7 +58,7 @@ class Dynamic(models.Model):
     dyn_title = models.CharField(max_length=50)
     dyn_like = models.IntegerField(blank=False, null=False,default=0)
     dyn_time = models.DateTimeField(blank=True, null=True,auto_now_add=True)
-    dyn_imag = models.ImageField(verbose_name='动态图片', upload_to='dynamic_img/', null=True, blank=True)
+    dyn_imag = models.ImageField(verbose_name='动态图片', upload_to='dynamic_img/', default="dynamic_img/默认动态.jpg",null=True, blank=True)
 
     def __str__(self):
         return self.dyn_title
@@ -85,7 +85,7 @@ class Pet(models.Model):
     pet_name = models.CharField(max_length=30)
     pet_age = models.IntegerField(blank=False, null=False,default=0)
     pet_sex = models.CharField(max_length=32,choices=gender,default='男孩')
-    pet_imag = models.ImageField(verbose_name='宠物图片', upload_to='pet_img/', null=True, blank=True)
+    pet_imag = models.ImageField(verbose_name='宠物图片', upload_to='pet_img/',  default="pet_img/默认宠物.jpg",null=True, blank=True)
 
     def __str__(self):
         return self.pet_name

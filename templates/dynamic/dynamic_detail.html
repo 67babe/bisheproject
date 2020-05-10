@@ -45,7 +45,7 @@
                                     <div style="font-size: 15px;color: #9d9d9d" id="a_time">{{ data.dyn_time }}</div>
 
                                     {% if data.user.id == user.id %}
-                                        <a href="#" onclick="confirm_delete()">
+                                        <a href="#" onclick="confirm_delete_dynamic()">
                                             <div style="font-size: 30px;position: relative;left: 92%;top: -33px;">🗑️
                                             </div>
                                         </a>
@@ -64,7 +64,7 @@
                                     </p>
                                     <script>
                                         // 删除函数
-                                        function confirm_delete() {
+                                        function confirm_delete_dynamic() {
                                             // 调用layer弹窗组件
                                             layer.open({
                                                 // 弹窗标题
@@ -90,8 +90,7 @@
                                                 <strong style="color: #2e6da4;font-size: 20px;position: relative;top: 2px">
                                                     {{ comment.user }}:
                                                     {% if user.id == comment.user.id %}
-
-                                                        <a href="#" onclick="confirm_delete()">
+                                                        <a href="{% url "comment:delete_comment" comment.id%}" >
                                                             <span style="font-size: 20px;position: relative;left: 78%;display: inline">🗑️</span>
                                                         </a>
                                                     {% endif %}
@@ -107,7 +106,7 @@
                 </span>
                                             <script>
                                                 // 删除函数
-                                                function confirm_delete() {
+                                                function confirm_delete_comment() {
                                                     // 调用layer弹窗组件
                                                     layer.open({
                                                         // 弹窗标题

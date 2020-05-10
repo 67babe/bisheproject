@@ -239,15 +239,28 @@ def upload_dynamic(request):
     if request.method == "POST":
         form = DynamicForm (request.POST, request.FILES)
         if form.is_valid():
-            title = form.cleaned_data['title']
-            text = form.cleaned_data['text']
-            imag = request.FILES['imag']
-            new_dynamic = Dynamic.objects.create(user_id=userid)
-            new_dynamic.dyn_title=title
-            new_dynamic.dyn_text = text
-            new_dynamic.dyn_imag = imag
-            new_dynamic.save()
-            return redirect('/dynamic/')  # 自动跳转到
+            if request.FILES.get('imag'):
+                title = form.cleaned_data['title']
+                text = form.cleaned_data['text']
+                # imag = request.FILES['imag']
+                imag = request.FILES.get('imag')
+                new_dynamic = Dynamic.objects.create(user_id=userid)
+                new_dynamic.dyn_title = title
+                new_dynamic.dyn_text = text
+                new_dynamic.dyn_imag = imag
+                new_dynamic.save()
+                return redirect('/dynamic/')  # 自动跳转到
+            else:
+                title = form.cleaned_data['title']
+                text = form.cleaned_data['text']
+                # imag = request.FILES['imag']
+                # imag = request.FILES.get('imag')
+                new_dynamic = Dynamic.objects.create(user_id=userid)
+                new_dynamic.dyn_title=title
+                new_dynamic.dyn_text = text
+                # new_dynamic.dyn_imag = imag
+                new_dynamic.save()
+                return redirect('/dynamic/')  # 自动跳转到
     form = DynamicForm()
     return render(request, 'dynamic/upload_dynamic.html', locals())
 
@@ -357,17 +370,28 @@ def add_pet(request):
     if request.method == "POST":
         form = PetForm(request.POST, request.FILES)
         if form.is_valid():
-            pet_name = form.cleaned_data['pet_name']
-            pet_age = form.cleaned_data['pet_age']
-            pet_sex = form.cleaned_data['pet_sex']
-            pet_imag = request.FILES['pet_img']
-            new_pet = Pet.objects.create(user_id=userid)
-            new_pet.pet_name = pet_name
-            new_pet.pet_age = pet_age
-            new_pet.pet_sex = pet_sex
-            new_pet.pet_imag = pet_imag
-            new_pet.save()
-            return redirect('/pet/')  # 自动跳转到
+            if  request.FILES.get('pet_img'):
+                pet_name = form.cleaned_data['pet_name']
+                pet_age = form.cleaned_data['pet_age']
+                pet_sex = form.cleaned_data['pet_sex']
+                pet_imag = request.FILES.get('pet_img')
+                new_pet = Pet.objects.create(user_id=userid)
+                new_pet.pet_name = pet_name
+                new_pet.pet_age = pet_age
+                new_pet.pet_sex = pet_sex
+                new_pet.pet_imag = pet_imag
+                new_pet.save()
+                return redirect('/pet/')  # 自动跳转到
+            else:
+                pet_name = form.cleaned_data['pet_name']
+                pet_age = form.cleaned_data['pet_age']
+                pet_sex = form.cleaned_data['pet_sex']
+                new_pet = Pet.objects.create(user_id=userid)
+                new_pet.pet_name = pet_name
+                new_pet.pet_age = pet_age
+                new_pet.pet_sex = pet_sex
+                new_pet.save()
+                return redirect('/pet/')  # 自动跳转到
     form = PetForm()
     return render(request, 'pet/add_pet.html', locals())
 
@@ -386,19 +410,36 @@ def user_setting(request):
         form = ProfileForm(request.POST, request.FILES)
         message = "请检查填写的内容！"
         if form.is_valid():
-            user.name = form.cleaned_data['username']
-            user.email = form.cleaned_data['email']
-            user.sex = form.cleaned_data['sex']
-            user.profile = form.cleaned_data['profile']
-            user.user_imag = request.FILES['imag']
-            if not user.user_imag:
-                message = "请选择图片！"
-                return render(request, 'home/user_setting.html', locals())
-            user.save()
+            if request.FILES.get('imag'):
+                user.name = form.cleaned_data['username']
+                user.email = form.cleaned_data['email']
+                user.sex = form.cleaned_data['sex']
+                user.profile = form.cleaned_data['profile']
+                user.user_imag = request.FILES.get('imag')
+                # if not user.user_imag:
+                #     message = "请选择图片！"
+                #     return render(request, 'home/user_setting.html', locals())
+                user.save()
+
+            else:
+                user.name = form.cleaned_data['username']
+                user.email = form.cleaned_data['email']
+                user.sex = form.cleaned_data['sex']
+                user.profile = form.cleaned_data['profile']
+                user.user_imag=user_head.user_imag
+                # if not user.user_imag:
+                #     message = "请选择图片！"
+                #     return render(request, 'home/user_setting.html', locals())
+                user.save()
+                print("没选")
+        else:
+            message = "请选择图片！"
+            return render(request, 'home/user_setting.html', locals())
         return HttpResponseRedirect('/home/'+str(userid))
 
     else:
         default_data = {'username': user.name, 'email': user.email, 'sex': user.sex, 'profile': user.profile,'imag':user.user_imag}
+        print("form无效")
         print(user.user_imag)
         form = ProfileForm(default_data)
         return render(request, 'home/user_setting.html', locals())
