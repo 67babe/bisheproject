@@ -36,6 +36,10 @@
                             {% csrf_token %}
                             <input type="submit" style="font-size:30px;border: 0px;background: none" value="">
                         </form>
+                    {% else %}
+
+                            <input type="submit" style="font-size:30px;border: 0px;background: none" value="">
+
                     {% endif %}
                 </div>
 
@@ -59,28 +63,63 @@
                 </div>
 
                 <div style="position:relative;left: 26%;top: 20px">
-                    <form method="get" enctype="multipart/form-data" action="/my_following/"
-                          style="display: inline;margin-left: 10px">
+                    {% if userid2 == user_info.id %}
                         {% csrf_token %}
+                        <form method="get" enctype="multipart/form-data" action="/my_following/"
+                              style="display: inline;margin-left: 10px">
+                            <input type="submit" value="关注  {{ follower_number.count }}️"
+                                   style="font-size: 20px ;color: #0f0f0f;border: 0px ;background:#dcdcdc ;outline:gainsboro; display: inline;border-radius:8px;"
+                                   class="ok">
+                        </form>
+                    {% else %}
                         <input type="submit" value="关注  {{ follower_number.count }}️"
                                style="font-size: 20px ;color: #0f0f0f;border: 0px ;background:#dcdcdc ;outline:gainsboro; display: inline;border-radius:8px;"
                                class="ok">
-                    </form>
+                    {% endif %}
 
-                    <form method="get" enctype="multipart/form-data" action="/my_follower/"
-                          style="display: inline;margin-left: 10px">
-                        <input type="submit" value="粉丝  {{ following_number.count }}"
-                               style="font-size: 20px ;color: #0f0f0f;border: 0px ;background:#dcdcdc;outline:gainsboro;display: inline; border-radius:8px;"
+                    {% if userid2 == user_info.id %}
+                        {% csrf_token %}
+                        <form method="get" enctype="multipart/form-data" action="/my_following/"
+                              style="display: inline;margin-left: 10px">
+                            <input type="submit" value="粉丝  {{ following_number.count }}️"
+                                   style="font-size: 20px ;color: #0f0f0f;border: 0px ;background:#dcdcdc ;outline:gainsboro; display: inline;border-radius:8px;"
+                                   class="ok">
+                        </form>
+                    {% else %}
+                        <input type="submit" value="粉丝  {{ following_number.count }}️"
+                               style="font-size: 20px ;color: #0f0f0f;border: 0px ;background:#dcdcdc ;outline:gainsboro; display: inline;border-radius:8px;"
                                class="ok">
-                    </form>
+                    {% endif %}
 
 
-                    <form method="get" enctype="multipart/form-data" action="/pet/"
-                          style="display: inline;margin-left: 10px">
+                    {% if userid2 == user_info.id %}
+                        {% csrf_token %}
+                        <form method="get" enctype="multipart/form-data" action="/my_following/"
+                              style="display: inline;margin-left: 10px">
+                            <input type="submit" value="猫猫  {{ pets.count }}️"
+                                   style="font-size: 20px ;color: #0f0f0f;border: 0px ;background:#dcdcdc ;outline:gainsboro; display: inline;border-radius:8px;"
+                                   class="ok">
+                        </form>
+                    {% else %}
                         <input type="submit" value="猫猫  {{ pets.count }}"
-                               style="font-size: 20px ;color: #0f0f0f;border: 0px ;background:#dcdcdc;outline:gainsboro;display: inline; border-radius:8px;"
+                               style="font-size: 20px ;color: #0f0f0f;border: 0px ;background:#dcdcdc ;outline:gainsboro; display: inline;border-radius:8px;"
                                class="ok">
-                    </form>
+                    {% endif %}
+
+                    {#                    <form method="get" enctype="multipart/form-data" action="/my_follower/"#}
+                    {#                          style="display: inline;margin-left: 10px">#}
+                    {#                        <input type="submit" value="粉丝  {{ following_number.count }}"#}
+                    {#                               style="font-size: 20px ;color: #0f0f0f;border: 0px ;background:#dcdcdc;outline:gainsboro;display: inline; border-radius:8px;"#}
+                    {#                               class="ok">#}
+                    {#                    </form>#}
+
+                    {##}
+                    {#                    <form method="get" enctype="multipart/form-data" action="/pet/"#}
+                    {#                          style="display: inline;margin-left: 10px">#}
+                    {#                        <input type="submit" value="猫猫  {{ pets.count }}"#}
+                    {#                               style="font-size: 20px ;color: #0f0f0f;border: 0px ;background:#dcdcdc;outline:gainsboro;display: inline; border-radius:8px;"#}
+                    {#                               class="ok">#}
+                    {#                    </form>#}
 
                 </div>
                 {#            关注取关按钮#}

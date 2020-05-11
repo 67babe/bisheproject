@@ -30,6 +30,8 @@ urlpatterns = [
     url(r'^logout/', views.logout),
     url(r'^captcha', include('captcha.urls')), # 增加这一行
     url(r'^dynamic/', views.dynamic),
+    url(r'^cat/', views.cat),
+    url(r'^search_cat/$', views.search_cat, name='search_cat'),
     path('dynamic_detail/<int:id>/', views.dynamic_detail,name='dynamic_detail'),#显示用户个人页面
     url(r'^my_dynamic/', views.my_dynamic),
     path('delete_dynamic/<int:id>/', views.delete_dynamic,name='delete_dynamic'),

@@ -46,17 +46,21 @@
               <li class="active"><a href="/dynamic/">发现</a></li>
                 <li class="active"><a href="/my_dynamic/">我的发布</a></li>
               <li class="active"><a href="/pet/">我的猫猫</a></li>
+      <li class="active"><a href="/cat/">猫猫大全</a></li>
               <li class="active"><a href="{% url 'home' request.session.user_id %}">个人主页</a></li>
               <li class="active"><a href="/my_following/">我的关注</a></li>
                 <li class="active"><a href="/my_follower/">我的粉丝</a></li>
+
     {% else %}
 
             <li class="active"><a href="/index/">主页</a></li>
               <li class="active"><a href="/index/">发现</a></li>
               <li class="active"><a href="/index/">我的猫猫</a></li>
+      <li class="active"><a href="/cat/">猫猫大全</a></li>
               <li class="active"><a href="/index/">个人主页</a></li>
               <li class="active"><a href="/index/">我的关注</a></li>
                 <li class="active"><a href="/index/">我的粉丝</a></li>
+{#                <li class="active"><a href="/cat/">猫猫大全</a></li>#}
   {% endif %}
           </ul>
           <ul class="nav navbar-nav navbar-right">

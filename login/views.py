@@ -11,6 +11,7 @@ from django.conf import settings
 from .models import User
 from .models import Dynamic
 from .models import Pet
+from .models import Cat
 from .models import Discuss
 from .models import Question
 from .models import Discuss
@@ -21,6 +22,8 @@ from .forms import RegisterForm
 from .forms import PwdForm
 from .forms import PetForm
 from .forms import DynamicForm
+from django.db.models import Q
+
 from comment.models import Comment
 from .models import PicTest
 from django.db.models import Q
@@ -180,10 +183,41 @@ def search_dynamic(request):
         error_msg = '请输入关键词'
         return render(request, 'dynamic/dynamic.html',locals())
 
-    dynamic_list = Dynamic.objects.filter(dyn_title__icontains=q)
+    dynamic_list = Dynamic.objects.filter(Q(dyn_title__icontains=q) | Q(dyn_text__icontains=q))
+
     if dynamic_list:
         print('找到了')
     return render(request, 'dynamic/search_dynamic_result.html', locals())
+
+def search_cat(request):
+    userid = request.session.get('user_id')
+    user = User.objects.get(id=userid)
+    user_head = User.objects.get(id=userid)  # 专门做头像用
+    q = request.GET.get('q')
+    print(q)
+    error_msg = ''
+    if not q:
+        error_msg = '请输入关键词'
+        return render(request, 'cat/cat.html',locals())
+
+    cat_list = Cat.objects.filter(Q(cat_name__icontains=q) | Q(cat_hometown__icontains=q))
+    # (Q(cat_name__icontains=q) | Q(cat_hometown__icontains=q))
+    if cat_list:
+        print('找到了')
+    return render(request, 'cat/search_cat.html', locals())
+
+def cat(request):
+    if not request.session.get('is_login', None):
+        # 如果本来就未登录，也就没有登出一说
+        return redirect("/index/")
+    userid = request.session.get('user_id')
+    user = User.objects.get(id=userid)
+    user_head = User.objects.get(id=userid)  # 专门做头像用
+    data = Cat.objects.all() # .order_by('-pub_date')
+    # comment=Comment.objects.filter(dynamic_id=)
+    return render(request, 'cat/cat.html',locals())
+
+
 
 def dynamic(request):
     if not request.session.get('is_login', None):

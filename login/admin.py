@@ -11,6 +11,7 @@ admin.site.register(models.Pet)
 admin.site.register(models.Question)
 admin.site.register(models.FriendShip)
 admin.site.register(Comment)
+admin.site.register(models.Cat)
 #
 # class MyAdminSite(admin.AdminSite):
 #     site_header = '67的猫猫之家管理系统'  # 此处设置页面显示标题

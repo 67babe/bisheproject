@@ -116,3 +116,11 @@ class Question(models.Model):
 
 class PicTest(models.Model):
     goods_pic=models.ImageField(upload_to='booktest')
+
+class Cat(models.Model):
+    cat_imag = models.CharField(max_length=1000, default='');
+    cat_name=models.CharField(max_length=50);
+    cat_hometown = models.CharField(max_length=100);
+    cat_weight = models.CharField(max_length=50);
+    cat_life=models.CharField(max_length=50);
+    cat_price=models.CharField(max_length=50);
